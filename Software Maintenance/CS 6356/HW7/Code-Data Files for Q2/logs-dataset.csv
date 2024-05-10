@@ -1,0 +1,124 @@
+Phase,Time (minutes),No. of classes inspected,No. of classes changed,No. of methods inspected,No. of methods changes
+Impact Analysis,10,2,0,2,0
+Actualization,25,2,1,2,1
+Verification,10,0,0,0,0
+Total,65,5,2,5,2
+Concept location,30,1,0,1,0
+Impact Analysis,20,3,0,6,0
+Actualization,20,2,2,3,3
+Verification,20,1,1,1,1
+Total,90,7,3,11,4
+Concept location,35,4,0,1,1
+Impact Analysis,30,4,0,2,2
+Actualization,40,2,0,3,3
+Verification,20,-,-,-,-
+Total,125,10,0,6,6
+Concept location,80,7,0,6,0
+Impact Analysis,45,4,0,4,0
+Actualization,100,2,1,1,1
+Verification,60,0,0,0,0
+Total,285,7,1,6,1
+Concept location,30,1,1,3,1
+Impact Analysis,30,3,2,3,1
+Actualization,60,1,1,1,1
+Verification,20,1,1,1,1
+Total,140,3,1,1,1
+Concept location,150,5,1,4,1
+Impact Analysis,30,2,1,2,1
+Actualization,65,1,1,1,1
+Verification,25,1,1,1,1
+Total,270,5,1,4,1
+Concept location,40,5,0,1,0
+Impact Analysis,20,2,0,2,0
+Concept location,12,2,0,3,0
+Impact Analysis,20,2,0,3,0
+Prefactoring,-,-,-,-,-
+Actualization,5,1,1,0,0
+Postfactoring,-,-,-,-,-
+Verification,5,0,0,0,0
+Distinct Total,42,2,1,3,0
+Total,42,5,1,6,0
+Concept location,20,2,0,3,0
+Impact Analysis,15,2,0,3,0
+Prefactoring,-,-,-,-,-
+Actualization,5,1,1,0,0
+Postfactoring,-,-,-,-,-
+Verification,5,0,0,0,0
+Distinct Total,45,2,1,3,0
+Total Time,45,5,1,6,0
+Concept location,35,4,-,5,-
+Impact Analysis,25,2,0,3,1
+Actualization,15,1,1,1,-
+Verification,15,-,-,-,-
+Total,90,7,1,9,1
+Concept Ct,19,3,0,2,0
+Concept Ct,20,2,0,1,0
+Prefactoring,-,-,-,-,-
+Actualization,24,2,1,1,0
+Postfactoring,-,-,-,-,-
+Verification,5,0,0,0,0
+Total,68,3,1,2,0
+Concept location,30,1,1,3,1
+Impact Analysis,30,1,1,2,1
+Actualization,5,1,1,1,1
+Verification,10,-,-,-,-
+Total,75,3,3,6,3
+Concept location,60,3,0,4,0
+Impact Analysis,20,3,0,4,0
+Prefactoring,-,-,-,-,-
+Actualization,10,1,1,0,0
+Post-Factoring,-,-,-,-,-
+Verification,30,0,0,0,0
+Total,120,3,1,4,0
+Concept location,45,2,0,3,0
+Impact Analysis,25,2,0,3,0
+Actualization,10,2,1,3,2
+Verification,15,2,0,2,0
+Total,95,8,1,11,2
+Concept location,30,2,0,0,0
+Impact Analysis,20,2,0,0,0
+Actualization,10,1,1,0,0
+Verification,10,0,0,0,0
+Total,70,5,1,0,0
+Concept Ct,45,2,-,3,-
+Prefactoring,-,-,-,-,-
+Actualization,15,1,1,0,-
+Postfactoring,-,-,-,-,-
+Verification,10,1,-,-,-
+Total,90,5,1,3,-
+Concept Ct,20,5,0,0,
+Impact Analysis,10,2,0,3,0
+Prefactoring,0,0,0,0,0
+Actualization,7,1,1,0,0
+Postfactoring,0,0,0,0,0
+Verification,5,0,0,0,0
+Total,42,6,1,3,0
+Concept Ct,70,1,1,4,0
+Impact Analysis,40,1,1,4,0
+Actualization,20,1,1,4,0
+Post factoring,20,1,1,4,0
+Verification,10,1,1,4,0
+Total,160,1,1,4,0
+Concept location,60,15,0,10,0
+Impact Analysis,30,6,0,7,0
+Prefactoring,-,-,-,-,-
+Actualization,20,3,3,3,3
+Postfactoring,-,-,-,-,-
+Verification,20,0,0,0,0
+Total,140,15,3,10,3
+Concept,30,2,0,0,0
+Impact Analysis,20,2,0,0,0
+Actualization,10,1,1,0,0
+Verification,10,0,0,0,0
+Total,70,5,1,0,0
+Impact Analysis,30,6,0,6,0
+Prefactoring,-,-,-,-,-
+Actualization,15,2,2,2,2
+Postfactoring,-,-,-,-,-
+Verification,15,0,0,0,0
+Total,135,19,2,17,2
+Concept location,90,2,0,2,0
+Impact Analysis,40,4,0,4,0
+Actualization,30,3,3,3,3
+Verification,30,3,3,3,3
+Total,190,12,6,12,6

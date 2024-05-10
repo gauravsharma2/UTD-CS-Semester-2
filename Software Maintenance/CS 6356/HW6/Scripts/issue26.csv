@@ -1,0 +1,1884 @@
+Summary,Issue key,Issue id,Issue Type,Status,Project key,Project name,Project type,Project lead,Project description,Project url,Priority,Resolution,Assignee,Reporter,Creator,Created,Updated,Last Viewed,Resolved,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Affects Version/s,Fix Version/s,Fix Version/s,Fix Version/s,Component/s,Component/s,Due Date,Votes,Labels,Labels,Description,Environment,Original Estimate,Remaining Estimate,Time Spent,Work Ratio,Σ Original Estimate,Σ Remaining Estimate,Σ Time Spent,Security Level,Inward issue link (Duplicate),Outward issue link (Reference),Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Attachment,Custom field (Affects version (Component)),Custom field (Attachment count),Custom field (Blog - New Blog Administrators),Custom field (Blog - New Blog PMC),Custom field (Blog - Write access),Custom field (Blog Administrator?),Custom field (Blogs - Admin for blog),Custom field (Blogs - Email Address),Custom field (Blogs - Existing Blog Access Level),Custom field (Blogs - Existing Blog Name),Custom field (Blogs - New Blog Write Access),Custom field (Blogs - Username),Custom field (Bug Category),Custom field (Bugzilla - Email Notification Address),Custom field (Bugzilla - List of usernames),Custom field (Bugzilla - PMC Name),Custom field (Bugzilla - Project Name),Custom field (Bugzilla Id),Custom field (Bugzilla Id),Custom field (Change Category),Custom field (Complexity),Custom field (Discovered By),Custom field (Docs Text),Custom field (Enable Automatic Patch Review),Custom field (Epic Link),Custom field (Estimated Complexity),Custom field (Evidence Of Open Source Adoption),Custom field (Evidence Of Registration),Custom field (Evidence Of Use On World Wide Web),Custom field (Existing GitBox Approval),Custom field (External issue URL),Custom field (Fix version (Component)),Custom field (Flags),Custom field (Git Notification Mailing List),Custom field (Git Repository Import Path),Custom field (Git Repository Name),Custom field (Git Repository Type),Custom field (GitHub Options),Custom field (Github Integration),Custom field (Github Integrations - Other),Custom field (Global Rank),Custom field (INFRA - Subversion Repository Path),Custom field (Initial Confluence Contributors),Custom field (Language),Custom field (Last public comment date),Custom field (Level of effort),Custom field (Machine Readable Info),Custom field (Mentor),Custom field (New-TLP-TLPName),Custom field (Original story points),Custom field (Parent Link),Custom field (Priority),Custom field (Project),Custom field (Protected Branch),Custom field (Rank),Custom field (Rank (Obsolete)),Custom field (Review Date),Custom field (Reviewer),Custom field (Severity),Custom field (Severity),Custom field (Skill Level),Custom field (Source Control Link),Custom field (Space Description),Custom field (Space Key),Custom field (Space Name),Custom field (Start Date),Custom field (Tags),Custom field (Target end),Custom field (Target start),Custom field (Team),Custom field (Test and Documentation Plan),Custom field (Testcase included),Custom field (Tester),Custom field (Workaround),Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment,Comment
+NPE due to a malformed rectangle,PDFBOX-5555,13516096,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,lehmi,lehmi,31/Dec/22 11:56,13/Apr/23 14:54,07/May/23 20:06,31/Dec/22 12:01,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.28,3.0.0 PDFBox,,Rendering,,,0,,,"The following exception occurs when rendering file from PDFBOX-5178
+
+{code}
+
+Caused by: java.lang.NullPointerException: Cannot invoke ""org.apache.pdfbox.pdmodel.common.PDRectangle.getLowerLeftX()"" because ""bbox"" is null
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDAbstractAppearanceHandler.setTransformationMatrix(PDAbstractAppearanceHandler.java:504)
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDAbstractAppearanceHandler.getAppearanceEntryAsContentStream(PDAbstractAppearanceHandler.java:487)
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDAbstractAppearanceHandler.getNormalAppearanceAsContentStream(PDAbstractAppearanceHandler.java:149)
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDAbstractAppearanceHandler.getNormalAppearanceAsContentStream(PDAbstractAppearanceHandler.java:132)
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDFileAttachmentAppearanceHandler.generateNormalAppearance(PDFileAttachmentAppearanceHandler.java:64)
+    org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDFileAttachmentAppearanceHandler.generateAppearanceStreams(PDFileAttachmentAppearanceHandler.java:51)
+    org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationMarkup.constructAppearances(PDAnnotationMarkup.java:902)
+    org.apache.pdfbox.rendering.PageDrawer.showAnnotation(PageDrawer.java:1511)
+    org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:283)
+    org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:355)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:453)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:435)
+    java.base/java.lang.Thread.run(Thread.java:833)
+
+{code}
+
+ 
+
+The issue was introduced with PDFBOX-5394 and happens due to an malformed rectangle (an array of 3 instead of 4 values)",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Dec 31 15:03:32 UTC 2022,,,,,,,,,,"0|z1egq8:",9223372036854775807,,,,,,,,,,,,,,,,,,,"31/Dec/22 11:58;jira-bot;Commit 1906294 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1906294 ]
+
+PDFBOX-5555: avoid NPE if the rectangle is missing or malformed;;;","31/Dec/22 11:59;jira-bot;Commit 1906295 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1906295 ]
+
+PDFBOX-5555: avoid NPE if the rectangle is missing or malformed;;;","31/Dec/22 12:01;lehmi;The normal appearance stream isn't generated if the rectangle of the annotation is missing or malformed;;;","31/Dec/22 15:03;tilman;Ouch, I forgot to include this file in my rendering set. Thanks!;;;",,,,,,,,,,,,,
+Poor Print Performance,PDFBOX-5548,13505909,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Duplicate,,vmerkel,vmerkel,25/Nov/22 09:51,26/Nov/22 03:56,07/May/23 20:06,26/Nov/22 03:56,2.0.26,2.0.27,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,print,printing,"Print of a PDF Document with 3 pages (see attachment) takes more than 4 minutes
+
+Problem can be reproduced with pdftools of versions 2.0.26 and 2.0.27",,,,,,,,,,PDFBOX-3046,,"25/Nov/22 09:48;vmerkel;PDFBoxPrintPerformance.pdf;https://issues.apache.org/jira/secure/attachment/13053119/PDFBoxPrintPerformance.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Nov 26 03:56:03 UTC 2022,,,,,,,,,,"0|z1cq34:",9223372036854775807,,,,,,,,,,,,,,,,,,,"26/Nov/22 03:56;tilman;Duplicate of PDFBOX-3046. Use a fixed dpi if you anticipate such cases.;;;",,,,,,,,,,,,,,,,
+wrong image data is extracted from PDF having single image,PDFBOX-5531,13487286,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Cannot Reproduce,,komal.walia,komal.walia,20/Oct/22 15:07,01/Nov/22 18:07,07/May/23 20:06,01/Nov/22 18:07,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,"Dear Concerned,
+
+We are trying to extract image from PDF having single image with following properties: CCITTFaxDecode decoded G4 compression, 150 dpi but when following code of PDFBox is used than we get LZW image with 96 dpi
+
+  PDDocument document = PDDocument.load(new File(""D:\\extractImage\\in\\20211125174048BT Exception Documents.pdf""));
+        PDPageTree list = document.getPages();
+        for (PDPage page : list) {
+            PDResources pdResources = page.getResources();
+            for (COSName c : pdResources.getXObjectNames()) {
+                PDXObject o = pdResources.getXObject(c);
+                if (o instanceof org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject) {
+
+ BufferedImage img=   ((org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject)o).getImage();
+
+}
+
+}
+
+}
+
+ 
+
+Also we we try to get raw stream byte data of image using following method , the byte array coming is incorrect.
+
+PDPage page1 = reader.getPage(pageNumber-1);
+            PDResources pdResources = page1.getResources();
+            for (COSName c : pdResources.getXObjectNames()) {
+                PDXObject o = pdResources.getXObject(c);
+                PDImageXObject ob = (PDImageXObject)o;
+            ImageXObject xObj1 = new ImageXObject();
+            xObj1.xObject = (PDImageXObject) o;
+
+COSStream imageStream = ob.getCOSObject();
+
+            PDStream stream = (new PDStream(imageStream));
+        //    BufferedImage image = ob.getImage();
+            byte[] streamDataBuffer = stream.toByteArray(); 
+
+ 
+
+kindly provide a method which can return black and white image object and image raw stream byte array.
+
+Thanks in advance.
+
+Regards,
+
+Komal Walia",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Oct 20 17:55:48 UTC 2022,,,,,,,,,,"0|z19jaw:",9223372036854775807,,,,,,,,,,,,,,,,,,,"20/Oct/22 17:55;tilman;Please attach your PDF and retry with the latest version and explain what you expected to get.;;;",,,,,,,,,,,,,,,,
+Wrong Text Extraction - Unwanted Extra Spaces in the middle of words,PDFBOX-5529,13486915,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,cmaya,cmaya,18/Oct/22 21:27,20/Oct/22 16:47,07/May/23 20:06,,2.0.0,2.0.1,2.0.10,2.0.11,2.0.12,2.0.13,2.0.14,2.0.15,2.0.16,2.0.17,2.0.18,2.0.19,2.0.2,2.0.20,2.0.21,2.0.22,2.0.23,2.0.24,2.0.25,2.0.26,2.0.27,2.0.3,2.0.4,2.0.5,2.0.6,2.0.7,2.0.8,2.0.9,,,,Text extraction,,,0,,,"*Overview:* 
+We are using PDFBOX as a third party API to extract text from financial PDF documents.
+
+We have been using PDFBox since a long time back, and we have detected a problem related to a bad text extraction on PDFs from a Customer. 
+
+Since we worked with Customer Data we cannot shared the PDF besides that are signed and we cannot even edit them.
+
+*Description of the problem:*
+
+By opening the PDF in Adobe Reader we can see several cases like the following screenshot:
+!image-2022-10-18-15-53-06-512.png|width=221,height=211!
+
+Visually it appears to have spaces between words, but if we copy the text from Adobe Reader and paste it into a text editor there is no extra spaces. 
+
+The following is the output that PDFBOX generates at the moment of doing text extraction:
+{code:java}
+Da te
+In v oice number
+Ou r r eference
+You r reference
+Con tact person{code}
+(!) *Important note: this behavior is present in all the versions of PDFBox.*
+
+*Analysis:*
+
+By downloading the PDFBOX source code 2.0.27 (this was checked as well in 2.0.26, 2.0.25 and 2.0.24) and testing/debugging we detected that the method _*writePage()* inside *PDFTextStripper.java*_ declared a list of objects:
+{code:java}
+List<LineItem> line = new ArrayList<LineItem>();{code}
+Which subsequently the code add elements into the list:
+{code:java}
+line.add(LineItem.getWordSeparator()); 
+.
+.
+.
+line.add(new LineItem(position));{code}
+ 
+
+And at some point it passes the list as a parameter into the following statement:
+{code:java}
+writeLine(normalize(line));{code}
+(!) *The important about this list called ""line"" is that somehow the ""LineItem"" objects are having NULL values inserted into it, and this values are at some point interpreted as ""blank spaces"" causing the behavior described above.*
+
+Here is an screenshot of how it is showed in the debugger:
+
+!image-2022-10-18-16-23-00-123.png|width=621,height=195!
+
+!image-2022-10-18-16-26-15-001.png|width=620,height=431!
+
+ 
+
+We tried to look for a method that manipulates this list and that we can override, but all of these methods that modified or access the list are protected.
+
+ 
+
+(!) *This is an example of how it displayed in the PDF Debugger:*
+{code:java}
+    q
+      94.525 545.32 141 11.2 re
+      W*
+      n
+      BT
+        /F3 8.8 Tf
+        1 0 0 1 99.325 547.72 Tm
+        0 g
+        0 G
+        [ (D) 22 (a) -131 (t) -109 (e) ] TJ
+      ET
+    Q 
+
+    q
+      94.525 530.9 141 11.225 re
+      W*
+      n
+      BT
+        /F3 8.8 Tf
+        1 0 0 1 99.325 533.3 Tm
+        0 G
+        [ (I) 26 (n) -135 (v) -229 (o) -5 (i) 20 (ce) -62 ( ) 59 (n) -44 (u) 30 (m) -27 (b) -75 (e) 28 (r) ] TJ
+      ET
+    Q
+
+    q
+      94.525 516.5 141 11.2 re
+      W*
+      n
+      BT
+        /F3 8.8 Tf
+        1 0 0 1 99.325 519.7 Tm
+        0 G
+        [ (O) -73 (u) -151 (r) -44 ( ) 59 (r) -134 (e) 28 (f) -38 (e) 28 (r) -44 (e) 28 (n) -44 (ce) ] TJ
+      ET
+    Q{code}
+ 
+
+ ",,,,,,,,,,,,"18/Oct/22 20:53;cmaya;image-2022-10-18-15-53-06-512.png;https://issues.apache.org/jira/secure/attachment/13051104/image-2022-10-18-15-53-06-512.png","18/Oct/22 21:23;cmaya;image-2022-10-18-16-23-00-123.png;https://issues.apache.org/jira/secure/attachment/13051103/image-2022-10-18-16-23-00-123.png","18/Oct/22 21:26;cmaya;image-2022-10-18-16-26-15-001.png;https://issues.apache.org/jira/secure/attachment/13051102/image-2022-10-18-16-26-15-001.png","19/Oct/22 21:48;cmaya;image-2022-10-19-16-48-36-198.png;https://issues.apache.org/jira/secure/attachment/13051213/image-2022-10-19-16-48-36-198.png",,,,,,,,,,,,,,,4.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Oct 20 16:47:46 UTC 2022,,,,,,,,,,"0|z19h2w:",9223372036854775807,,,,,,,,,,,,,,,,,,,"19/Oct/22 10:42;lehmi;Most likely those empty LineItems are WordSeparator-items. Those special items don't have a text position. 
+
+The more interesting question is, why does PDFBox insert a WordSeparator within a word. I guess the additional values within the {{TJ}} operator hit some threshold which triggers the insertion of the separator. But I'm afraid we can't answer that by staring at the code. We'll need some sort of a sample pdf to debug that piece of code.
+
+
+;;;","19/Oct/22 17:26;tilman;Maybe try some code change that you think solves the problem. Run the build tests and see the differences. If there are none, or if they are useful, please share them, I'll run them on my larger set.
+(In most cases, changes have some drawback)
+The diff files appear in pdfbox/target/test-output
+
+However the screenshot of your PDF shows a terrible layout, so you get a terrible text extraction. I don't know why Adobe gets correct text. Maybe they use a dictionary approach.;;;","19/Oct/22 17:29;mkl;Looking at the screen shot it is clear why an extractor would add those spaces, after all you say yourself:
+{quote}Visually it appears to have spaces between words,{quote}
+And you only wonder why the spaces are there after observing
+{quote}but if we copy the text from Adobe Reader and paste it into a text editor there is no extra spaces.{quote}
+Please be aware that Adobe Acrobat also takes tagging information into account; if there are *ActualText* information, Acrobat uses them and not heuristics based on the appearance. PDFBox on the other hand does not use the tagging information in its text stripper.
+
+Thus, please check whether your example file has such tags or not. The easiest option would be for you to share the file (or at least a page of it with that behavior).;;;","19/Oct/22 21:54;cmaya;Thanks for replying back!
+
+After analyzing a little bit deeper in the code, I found out that indeed, the PDFTextStripper.java in the writePage method has a validation in which if a threshold is hit then we add an element into the ""line"" list. This if condition is to check it the current text position starts after a new word would be expected to start.
+Below is an screenshot of this section of the code, I added a check just to see at which point the TextPosition from the LineItem is null, and seems that this NULL value is coming from the ""LineItem.getWordSeparator"".
+
+*(!) This particular example showed below is from the label ""Date"" showed in description of this ticket.*
+
+If I left the code with that particular condition avoiding the insertion of LineItems with a null TextPosition, the text is extracted correctly.
+
+!image-2022-10-19-16-48-36-198.png|width=924,height=506!
+
+I am trying to see if we have a similar document with the same behavior that we can edit in order to remove the customer sensitive data. The document we are testing at this moment is signed, and due to this I am unable to edit it and remove the sensitive data.;;;","19/Oct/22 22:05;cmaya;I looked for *ActualText* information, but I didn't find any tag like this in the PDF content.;;;","20/Oct/22 16:47;mkl;{quote}I looked for *ActualText* information, but I didn't find any tag like this in the PDF content.{quote}
+Then please share the PDF for further analysis.
+While you're right that in case of your document the text extraction result would improve by _not_ trying to identify gaps, in general one needs this gap detection.;;;",,,,,,,,,,,
+"""Threads"" array in Document Catalog should be an indirect reference",PDFBOX-5518,13482898,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,capSVD,capSVD,23/Sep/22 08:19,23/Sep/22 09:04,07/May/23 20:06,,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,PDModel,,,0,,,"*TL;DR:*
+When using either of the methods ""getThreads"" or ""setThreads"" in class PDDocumentCatalog and saving the resulting document: Adobe Preflight is reporting an issue with the resulting ""Threads"" array in the document catalog and claims it should have been an indirect object reference instead of a direct object.
+
+My claim: The COSWriter should be able to create indirect objects for COSArrays when required.
+
+*Checking PDF-32000-1:*
+In table 28 ""Entries in the catalog dictionary"" we can find the following definition:
+!image-2022-09-23-09-50-30-766.png!
+
+
+*Determining reasons:*
+1. The mentioned get and set methods create a COSArray for the entry ""Threads"" of the catalog dictionary
+2. The COSWriter is assuming, that COSArrays should always preferably be written as a direct substructure of a dictionary.
+
+This may be entirely true for other arrays, but in this case is is cause for a syntactical error in resulting documents. (It is plausible and possible - but has not been checked - whether this causes issues for other structures aswell.)
+
+The COSWriter provides the means to create indirect objects for COSDictionaries, it however does (as far as I can see) not provide the means to flag a COSArray for the same handling.
+
+*Possible solutions:*
+As far as I can see the COSWriter would be entirely capable of creating COSObjects for any of the COSBase types, the only thing missing is the ability to mark a COSArray to be written indirectly and the matching handling by the COSWriter.
+Adding something like:
+!image-2022-09-23-10-03-15-070.png!
+at the right places in the COSWriter (similar to the handling of indirect COSDictionaries) seems to do the trick and resolves the issue.
+
+*Important issue?:*
+I fixed this on our end and hence it is not a pressing issue, also ""Threads"" is not as important and common as other structures and hence most documents and users won´t encounter this issue at all.
+
+However - It would be nice, should this be fixed.
+
+*Concerning a possible patch:*
+I could provide a patch making the required changes, but would have to adapt it for the current PDFBox 2.0.27-SNAPSHOT as I developed it rather as a hotfix for our mirror of the library.
+
+And concerning that patch I should mention:
+As can be assumed - a ""isDirectArray"" and ""setDirectArray"" method have been added to the COSArray - which is a quick and dirty solution, as it would be preferable for COSArray to use the already existing ""direct"" field, that other COSBase types (COSDictionaries) already use.
+
+As stated - the solution is quick and dirty and for a final solution in the PDFBox library a cleaner approach would be preferable. Hence I did not provide that patch for now.",,,,,,,,,,,,"23/Sep/22 07:50;capSVD;image-2022-09-23-09-50-30-766.png;https://issues.apache.org/jira/secure/attachment/13049677/image-2022-09-23-09-50-30-766.png","23/Sep/22 08:03;capSVD;image-2022-09-23-10-03-15-070.png;https://issues.apache.org/jira/secure/attachment/13049676/image-2022-09-23-10-03-15-070.png","23/Sep/22 08:54;capSVD;image-2022-09-23-10-54-31-618.png;https://issues.apache.org/jira/secure/attachment/13049682/image-2022-09-23-10-54-31-618.png",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Sep 23 08:54:47 UTC 2022,,,,,,,,,,"0|z18sh4:",9223372036854775807,,,,,,,,,,,,,,,,,,,"23/Sep/22 08:54;capSVD;I possibly should provide these changes to the PDDocumentCatalog:
+!image-2022-09-23-10-54-31-618.png!
+
+Which is enough in our use case, as we are always calling ""getThreads"" when opening documents - but a mechanism to mark such arrays as indirect (even if not accessed via those methods) would be a better idea (possibly something to add to the Parser?);;;",,,,,,,,,,,,,,,,
+pdf render not correct,PDFBOX-5516,13482690,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Duplicate,,sunnyawake,sunnyawake,22/Sep/22 05:45,22/Sep/22 06:12,07/May/23 20:06,22/Sep/22 06:12,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,,,,,,,,,,,PDFBOX-3293,,"22/Sep/22 05:47;sunnyawake;0907.pdf;https://issues.apache.org/jira/secure/attachment/13049603/0907.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Sep 22 06:12:08 UTC 2022,,,,,,,,,,"0|z18r7s:",9223372036854775807,,,,,,,,,,,,,,,,,,,"22/Sep/22 05:48;sunnyawake;hi,
+the attached pdf only has one character. it's not rendered correctly on both 2.0.26 and 3.0alpha3.;;;","22/Sep/22 06:12;tilman;Duplicate of PDFBOX-3293, which won't be fixed anytime soon, sadly. I'll add you as a watcher there.;;;",,,,,,,,,,,,,,,
+Load  a font “EUDC” throw an exception,PDFBOX-5515,13482681,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Bug,,berylbai,berylbai,22/Sep/22 03:14,23/Sep/22 15:15,07/May/23 20:06,23/Sep/22 06:20,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,"Using PDType0Font.load to load the attch font,  it throws an exception:
+
+!image-2022-09-22-11-13-37-448.png![^EUDC.ttf][^pdfbox.java]
+
+ ",,,,,,,,,,,,"22/Sep/22 03:13;berylbai;EUDC.ttf;https://issues.apache.org/jira/secure/attachment/13049594/EUDC.ttf","22/Sep/22 03:13;berylbai;image-2022-09-22-11-13-37-448.png;https://issues.apache.org/jira/secure/attachment/13049595/image-2022-09-22-11-13-37-448.png","22/Sep/22 03:14;berylbai;pdfbox.java;https://issues.apache.org/jira/secure/attachment/13049593/pdfbox.java","22/Sep/22 17:38;tilman;screenshot-1.png;https://issues.apache.org/jira/secure/attachment/13049627/screenshot-1.png",,,,,,,,,,,,,,,4.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Sep 23 15:15:40 UTC 2022,,,,,,,,,,"0|z18r5s:",9223372036854775807,,,,,,,,,,,,,,,,,,,"22/Sep/22 03:40;tilman;Well yes, ""a"" doesn't exist in that font. I opened it with DTL OTMaster lite and can't find it.;;;","22/Sep/22 08:39;berylbai;[~tilman]  I understand, there has a new question that i use font.getName() to get its name, the result is null.;;;","22/Sep/22 17:39;tilman;This is because your font doesn't have a proper postscript name record. In the screenshot this would be the one with nameID 6, which is ""00"". But even that one is ignored by us because only language IDs 0 and 1033 are supported. There's a comment from 2014 in our code ""only these two formats are valid"". I don't know if the comment is correct, but even if we'd expand that one you still wouldn't get a decent name, just ""00"".
+ !screenshot-1.png! ;;;","23/Sep/22 06:15;berylbai;[~tilman] Thank you for your detailed explanation, you can close this issue.;;;","23/Sep/22 09:28;berylbai;[~tilman] Can I get the font family name, font style of the font through fontbox?;;;","23/Sep/22 15:15;tilman;Call {{new TrueTypeFont ttf = TTFParser().parse(...)}} to get a font and then {{ttf.getNaming()}} to get a naming table which offers further features. It's still possible that you'll get nothing because of the reasons I mentioned in my last comment (language).;;;",,,,,,,,,,,
+Font not found because of case issues,PDFBOX-5514,13481741,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,Schmidor,Schmidor,15/Sep/22 16:20,29/Sep/22 17:57,07/May/23 20:06,17/Sep/22 13:42,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,,,,0,,,"In the attached PDF uses a not embedded font, which is referenced as ""3of9Barcode"".
+The font itself is is declared as ""3Of9Barcode"" in the TTF.
+
+Unfortunately it seems Acrobat and some other readers are case-insensitive here and use the font if it is installed on the system, while PDFBox uses a fallback.
+
+Would it be acceptable to change FontMapperImpl to do a case-insensitive lookup?",,,,,,,,,,,,"15/Sep/22 16:08;Schmidor;3OF9.TTF;https://issues.apache.org/jira/secure/attachment/13049360/3OF9.TTF","15/Sep/22 16:08;Schmidor;Lieferschein_PDF_TEST.pdf;https://issues.apache.org/jira/secure/attachment/13049361/Lieferschein_PDF_TEST.pdf","17/Sep/22 12:13;tilman;bugzilla888437.pdf;https://issues.apache.org/jira/secure/attachment/13049397/bugzilla888437.pdf",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 17 13:42:07 UTC 2022,,,,,,,,,,"0|z18lew:",9223372036854775807,,,,,,,,,,,,,,,,,,,"15/Sep/22 17:15;tilman;Yes!;;;","17/Sep/22 11:49;jira-bot;Commit 1904122 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904122 ]
+
+PDFBOX-5514: case insensitive font lookup, by Oliver Schmidtmer;;;","17/Sep/22 12:14;tilman;I'm having a lot of rendering differences that I didn't have when I tested a simpler version of the change yesterday. For some reason ""Times New Roman"" is replaced with ""ArialMT"", e.g. in  [^bugzilla888437.pdf] .;;;","17/Sep/22 13:04;tilman;I think I got it. I'll make some more tests first. ""addSubstitutes(mappedName"" should have baseName.;;;","17/Sep/22 13:23;jira-bot;Commit 1904123 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904123 ]
+
+PDFBOX-5514: use correct key; sonar fix;;;","17/Sep/22 13:24;jira-bot;Commit 1904124 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904124 ]
+
+PDFBOX-5514: format fix;;;","17/Sep/22 13:27;jira-bot;Commit 1904125 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1904125 ]
+
+PDFBOX-5514: case insensitive font lookup, by Oliver Schmidtmer;;;","17/Sep/22 13:40;jira-bot;Commit 1904126 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904126 ]
+
+PDFBOX-5514: format fix; closes #146;;;","17/Sep/22 13:42;tilman;Thank you [~Schmidor]!;;;",,,,,,,,
+getPageLayout throws IllegalArgumentException for empty mode,PDFBOX-5513,13481387,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,karolbe,karolbe,13/Sep/22 21:05,29/Sep/22 17:57,07/May/23 20:06,14/Sep/22 03:54,2.0.25,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,PDModel,,,0,,,"getPageLayout() method in PDDocumentCatalog can throw an exception IllegalArgumentException when the PageLayout mode is not one of defined in the PageLayout class. In my case the mode is simply an empty string.The PDF documents which contain such unexpected Page Layout value are all rendered by quite old Adobe PDF library 7.0 from 2014 (I can't share the document, it is confidential....).
+
+My suggestion is to modify the method so that, similarly to getPageMode() method, the eventual exception is caught and the method returns the default PageLayout.{color:#9876aa}SINGLE_PAGE {color}mode.{color:#9876aa}
+{color}
+
+ 
+
+This problem affects the current version in trunk, as well as at least 2.0.25 and 2.0.26.
+
+ 
+
+I have created very simple patch which fixes the problem, please consider applying it to the trunk and 2.0.x branch.
+
+ 
+
+ ",,,,,,,,,,,,"13/Sep/22 20:58;karolbe;page_layout_issue.patch;https://issues.apache.org/jira/secure/attachment/13049249/page_layout_issue.patch",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,Patch,,,,,,,,9223372036854775807,,,,Wed Sep 21 17:37:13 UTC 2022,,,,,,,,,,"0|z18j8g:",9223372036854775807,,,,,,,,,,,,,,,,,,,"14/Sep/22 03:48;jira-bot;Commit 1904053 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1904053 ]
+
+PDFBOX-5513: avoid IllegalArgumentException, as suggested by Karol Bryd;;;","14/Sep/22 03:48;jira-bot;Commit 1904054 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904054 ]
+
+PDFBOX-5513: avoid IllegalArgumentException, as suggested by Karol Bryd;;;","14/Sep/22 03:50;jira-bot;Commit 1904055 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1904055 ]
+
+PDFBOX-5513: no warning when empty;;;","14/Sep/22 03:50;jira-bot;Commit 1904056 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1904056 ]
+
+PDFBOX-5513: no warning when empty;;;","14/Sep/22 03:54;tilman;Thanks I have committed your suggestion slightly modified; I prefer warning but not for empty strings.;;;","14/Sep/22 05:31;tilman;Please test with a snapshot
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;","15/Sep/22 11:20;mkl;I'm a bit skeptical seeing a {*}get{*}ter that reports a value different from what's really there. This makes the {*}get{*}ter unusable when one wants to check the value...;;;","15/Sep/22 11:51;msahyoun;@mkl SinglePage is the default value. So in this case I think that returning SinglePage only reflects that. ;;;","15/Sep/22 17:29;mkl;Yes, one can argue along that line. If PDFBox users want to get default values instead of invalid ones or exceptions, then go ahead.
+
+Nonetheless, it feels wrong to me.;;;","16/Sep/22 06:24;msahyoun;What's your proposal?
+
+- no page mode et all or empty -> SinglePage
+- one of the pages modes defined -> return the PageMode
+- not empty but none of the defined ones -> exception
+
+?
+
+Added note -  one can always check the value using the COS model.
+
+BR
+Maruan;;;","18/Sep/22 21:31;mkl;{quote}What's your proposal? ...{quote}
+
+Something along those lines, I'm merely not sure why one should default for the empty name; the empty name is a name after all.
+
+An alternative to the exception could be a new {{PageLayout}} value UNSPECIFIED. People could then decide whether to handle this situation like the default value, as an error, or whether to retrieve the actual value and look at it more closely.
+
+The OP mentions that {{getPageMode}} already caught a `IllegalArgumentException` and returned the default instead. It think that handling these situations alike is even mode important than the approach used.;;;","19/Sep/22 10:35;msahyoun;[~tilman] thoughts? ;;;","19/Sep/22 17:49;tilman;If we create a PageMode.UNSPECIFIED then what would be its value? Also empty string? I think this is now evolving into something complex. And what would be done if we reassign PageMode.UNSPECIFIED after it was created for an ""exotic"" value? It would no longer contain the same string.;;;","21/Sep/22 17:37;mkl;{quote}If we create a PageMode.UNSPECIFIED then what would be its value?{quote}
+
+Most appropriately an attempt to retrieve its value should cause an exception. Thus, this enumeration member would essentially shift the exception to a later time.
+
+Also an attempt to set the document page mode to PageMode.UNSPECIFIED should be rejected.
+
+Oh well, maybe not a good alternative after all...
+
+{quote}I think this is now evolving into something complex.{quote}
+
+Indeed, and that wasn't my intention at all. I just wanted to express that a plain getter IMO should not return a value clearly different from the actual value.
+
+If the method name had indicated that some interpretation takes place (e.g. {{interpretPageMode}} or {{getBestPageModeMatch}} or {{getEffectivePageMode}}), I probably wouldn't have started such an argument at all ;). But as the method with that name has been around for so many years, one also shouldn't rename it on a whim.;;;",,,
+PDRadioButton.setValue(..) does not work for non-ASCII values,PDFBOX-5512,13481109,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Bug,msahyoun,chemFelix,chemFelix,12/Sep/22 12:57,13/Sep/22 02:36,07/May/23 20:06,13/Sep/22 02:36,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,AcroForm,,,0,,,"When setting a value of a PDRadioButton programmatically by calling setValue(value), it works well if value is just ASCII characters, but for example ""Universität"" is encoded internally as ""Universit#e4t"", neither approach works (the 2nd throws an exception). 
+
+The fix should write the correct encoded value, so that the respective options is displayed as checked in PDF viewers.","OpenJDK 8/Linux/x64, probably irrelevant",,,,,,,,,,,"12/Sep/22 13:56;msahyoun;Unfallmeldung_Bildungseinrichtungen_bf_01-2020-filled.pdf;https://issues.apache.org/jira/secure/attachment/13049178/Unfallmeldung_Bildungseinrichtungen_bf_01-2020-filled.pdf","12/Sep/22 12:55;chemFelix;Unfallmeldung_Bildungseinrichtungen_bf_01-2020.pdf;https://issues.apache.org/jira/secure/attachment/13049176/Unfallmeldung_Bildungseinrichtungen_bf_01-2020.pdf",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Mon Sep 12 14:57:34 UTC 2022,,,,,,,,,,"0|z18hjk:",9223372036854775807,,,,,,,,,,,,,,,,,,,"12/Sep/22 13:55;msahyoun;works fine for me - sure that you are setting using ""Universität""
+{code:java}
+    @Test
+    public void testPDFBox5512() throws IOException
+    {
+        String sourceUrl = ""https://issues.apache.org/jira/secure/attachment/13049176/Unfallmeldung_Bildungseinrichtungen_bf_01-2020.pdf"";
+
+        PDDocument testPdf = null;
+        try 
+        {
+            testPdf = PDDocument.load(new URL(sourceUrl).openStream());
+            PDAcroForm acroForm = testPdf.getDocumentCatalog().getAcroForm();
+            PDRadioButton field = (PDRadioButton) acroForm.getField(""Art der Bildungseinrichtung"");
+            // print the potential values to set the different options
+            System.out.println(field.getOnValues());
+            field.setValue(""Universität"");
+            testPdf.save(""Unfallmeldung_Bildungseinrichtungen_bf_01-2020-filled.pdf"");
+        }
+        finally
+        {
+            IOUtils.closeQuietly(testPdf);
+        }
+    }
+{code};;;","12/Sep/22 14:37;chemFelix;Hi Maruan,
+thanks very much for this extremely quick and qualified help. I could narrow my problem a bit, so far I was using
+Set<COSDictionary> objectsToWrite = new HashSet<COSDictionary>();
+[..]
+field.setValue(""Universität"");
+objectsToWrite.add(field.getCOSObject());
+pdfDocument.saveIncremental(outputStream, objectsToWrite);
+pdfDocument.close();
+outputStream.flush();
+
+Changing to pdfDocument.save(outputStream); solved the problem. I still cannot tell why in my implementation, the Unicode values made a difference, but in the end I just want it to work, so you helped me a lot. Many thanks!!
+
+Felix;;;","12/Sep/22 14:57;msahyoun;When you do an incremental saving you also need to make sure that the newly generated appearances (what you see) are also part of the increment
+
+{code:java}
+            List<PDAnnotationWidget> annots = field.getWidgets();
+            for (PDAnnotationWidget annot : annots) {
+                objectsToWrite.add(annot.getCOSObject());
+            }
+{code}
+
+Otherwise the new value is set internally but you don't get the visual result of that.;;;",,,,,,,,,,,,,,
+ClassCastException in PDResources.getIndirect(),PDFBOX-5511,13480983,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 13:04,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 13:05,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,,,PDModel,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/26/d0/26d02894ec7035783d7dd888a9a2e8ce527b84bf9ca5e4b7ea578eb39c40d838"",1,False,""821"",""java.lang.ClassCastException: org.apache.pdfbox.cos.COSString incompatible with org.apache.pdfbox.cos.COSDictionary
+	at org.apache.pdfbox.pdmodel.PDResources.getIndirect(PDResources.java:470)
+	at org.apache.pdfbox.pdmodel.PDResources.getExtGState(PDResources.java:235)
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 13:05:13 UTC 2022,,,,,,,,,,"0|z18grc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 13:05;jira-bot;Commit 1903971 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903971 ]
+
+PDFBOX-5511: avoid ClassCastException;;;",,,,,,,,,,,,,,,,
+ClassCastException in PDDocumentCatalog.getAcroForm(),PDFBOX-5510,13480981,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 12:52,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 12:54,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,,,AcroForm,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/86/41/8641712f7939bd84fe0001e936c2eba51ad4312ca9bcb97b7642f019b07e189a"",1,False,""2111"",""java.lang.ClassCastException: org.apache.pdfbox.cos.COSArray incompatible with org.apache.pdfbox.cos.COSDictionary
+	at org.apache.pdfbox.pdmodel.PDDocumentCatalog.getAcroForm(PDDocumentCatalog.java:143)
+	at org.apache.tika.parser.pdf.PDFParser.hasXFA(PDFParser.java:485)
+	at org.apache.tika.parser.pdf.PDFParser.parse(PDFParser.java:178)
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 12:52:44 UTC 2022,,,,,,,,,,"0|z18gqw:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 12:52;jira-bot;Commit 1903970 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903970 ]
+
+PDFBOX-5510: avoid ClassCastException;;;",,,,,,,,,,,,,,,,
+ClassCastException in PDAcroForm.getFields(),PDFBOX-5509,13480980,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 12:26,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 12:33,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,AcroForm,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/f7/2b/f72baa88cabe6a328806f33c1b55341c4eec6df40074c199961928ef9dc0cc11"",1,False,""3765"",""java.lang.ClassCastException: org.apache.pdfbox.cos.COSArray incompatible with org.apache.pdfbox.cos.COSDictionary
+	at org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm.getFields(PDAcroForm.java:384)
+	at org.apache.tika.parser.pdf.PDFParser.extractMetadata(PDFParser.java:387)
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 12:32:02 UTC 2022,,,,,,,,,,"0|z18gqo:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 12:31;jira-bot;Commit 1903967 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903967 ]
+
+PDFBOX-5509: avoid ClassCastException;;;","10/Sep/22 12:32;jira-bot;Commit 1903968 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903968 ]
+
+PDFBOX-5509: avoid ClassCastException;;;",,,,,,,,,,,,,,,
+ClassCastException in PDXObject.createXObject(),PDFBOX-5508,13480977,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 11:50,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 11:53,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,,,PDModel,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/90/9d/909d6b62089bfca234b9f727290d1157abec82f2475116351c4717221403a528"",1,False,""2045"",""java.lang.ClassCastException: org.apache.pdfbox.cos.COSArray incompatible with org.apache.pdfbox.cos.COSDictionary
+	at org.apache.pdfbox.pdmodel.graphics.PDXObject.createXObject(PDXObject.java:75)
+	at org.apache.pdfbox.pdmodel.PDResources.getXObject(PDResources.java:426)
+	at org.apache.pdfbox.contentstream.operator.DrawObject.process(DrawObject.java:60)
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 11:51:07 UTC 2022,,,,,,,,,,"0|z18gq0:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 11:51;jira-bot;Commit 1903964 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903964 ]
+
+PDFBOX-5508: avoid ClassCastException;;;",,,,,,,,,,,,,,,,
+ClassCastException in CMapParser.parseBeginbfchar,PDFBOX-5507,13480976,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 11:33,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 11:35,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,,,FontBox,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/d6/11/d611396e2fd1f45d216dcdfee45ed22d4bd452c75a00b5d3d8ba36a4efdc7524"",1,False,""1593"",""java.lang.ClassCastException: java.lang.Integer incompatible with [B
+	at org.apache.fontbox.cmap.CMapParser.parseBeginbfchar(CMapParser.java:300)
+	at org.apache.fontbox.cmap.CMapParser.parse(CMapParser.java:151)
+	at org.apache.pdfbox.pdmodel.font.CMapManager.parseCMap(CMapManager.java:74)
+	at org.apache.pdfbox.pdmodel.font.PDFont.readCMap(PDFont.java:214)
+	at org.apache.pdfbox.pdmodel.font.PDFont.loadUnicodeCmap(PDFont.java:147)
+	at org.apache.pdfbox.pdmodel.font.PDFont.<init>(PDFont.java:115)
+	at org.apache.pdfbox.pdmodel.font.PDSimpleFont.<init>(PDSimpleFont.java:74)
+	at org.apache.pdfbox.pdmodel.font.PDType1CFont.<init>(PDType1CFont.java:77)
+	at org.apache.pdfbox.pdmodel.font.PDFontFactory.createFont(PDFontFactory.java:74)
+	at org.apache.pdfbox.pdmodel.PDResources.getFont(PDResources.java:146)
+	at org.apache.pdfbox.contentstream.operator.text.SetFontAndSize.process(SetFontAndSize.java:66)
+	at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:966)
+	at org.apache.pdfbox.con"",""2644"",True
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 11:34:54 UTC 2022,,,,,,,,,,"0|z18gps:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 11:34;jira-bot;Commit 1903963 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903963 ]
+
+PDFBOX-5507: avoid ClassCastException;;;",,,,,,,,,,,,,,,,
+IndexOutOfBoundsException in Type1Parser.java,PDFBOX-5506,13480956,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 04:21,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 04:24,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/c3/9c/c39c99c7ecd091f778097e23374a08d78333d318c48b87c2ea62dfc7f096e82f"",1,False,""2825"",""java.lang.IndexOutOfBoundsException: Index 110 out of bounds for length 110
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:373)
+	at java.base/java.util.ArrayList.set(ArrayList.java:441)
+	at org.apache.fontbox.type1.Type1Parser.readSubrs(Type1Parser.java:747)
+	at org.apache.fontbox.type1.Type1Parser.parseBinary(Type1Parser.java:594)
+	at org.apache.fontbox.type1.Type1Parser.parse(Type1Parser.java:71)
+	at org.apache.fontbox.type1.Type1Font.createWithPFB(Type1Font.java:71)
+	at org.apache.pdfbox.pdmodel.font.PDType1Font.<init>(PDType1Font.java:247)
+	at org.apache.pdfbox.pdmodel.font.PDFontFactory.createFont(PDFontFactory.java:76)
+	at org.apache.pdfbox.pdmodel.PDResources.getFont(PDResources.java:146)
+	at org.apache.pdfbox.contentstream.operator.text.SetFont"",""2803"",True
+{noformat}
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 04:24:32 UTC 2022,,,,,,,,,,"0|z18glc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 04:23;jira-bot;Commit 1903957 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903957 ]
+
+PDFBOX-5506: avoid IndexOutOfBoundsException;;;","10/Sep/22 04:24;jira-bot;Commit 1903958 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903958 ]
+
+PDFBOX-5506: avoid IndexOutOfBoundsException;;;",,,,,,,,,,,,,,,
+IndexOutOfBoundsException in PDCIDFont.readWidths(),PDFBOX-5505,13480955,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 03:20,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 03:40,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/14/92/149251ce5121ed6b6cd68bbc7bcc108be7cf838ea9c457f2e87e5cbe0fd300ce"",1,False,""1509"",""java.lang.IndexOutOfBoundsException: Index 36 out of bounds for length 36
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:248)
+	at java.base/java.util.Objects.checkIndex(Objects.java:373)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at org.apache.pdfbox.cos.COSArray.getObject(COSArray.java:188)
+	at org.apache.pdfbox.pdmodel.font.PDCIDFont.readWidths(PDCIDFont.java:92)
+	at org.apache.pdfbox.pdmodel.font.PDCIDFont.<init>(PDCIDFont.java:70)
+	at org.apache.pdfbox.pdmodel.font.PDCIDFontType2.<init>(PDCIDFontType2.java:78)
+	at org.apache.pdfbox.pdmodel.font.PDCIDFontType2.<init>(PDCIDFontType2.java:65)
+	at org.apache.pdfbox.pdmodel.font.PDFontFactory.createDescendantFont(PDFontFactory.java:139)
+	at org.apache.pdfbox.pdmodel.font.PDType0Font.<init>(PDType0Font.java:203)
+	at org.apache.pdfbox.pdmodel.font.P"",""2979"",True
+{noformat}",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 03:40:22 UTC 2022,,,,,,,,,,"0|z18gl4:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 03:39;jira-bot;Commit 1903954 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903954 ]
+
+PDFBOX-5505: avoid IndexOutOfBoundsException;;;","10/Sep/22 03:40;jira-bot;Commit 1903955 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903955 ]
+
+PDFBOX-5505: avoid IndexOutOfBoundsException;;;",,,,,,,,,,,,,,,
+NullPointerException in CFFParser.parseFont(),PDFBOX-5504,13480954,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,10/Sep/22 03:00,29/Sep/22 17:57,07/May/23 20:06,10/Sep/22 03:02,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,0,,,"{noformat}
+""commoncrawl/CC-MAIN-2021-31/d9/d9/d9d93dc94f2ec53307340ea7cdf7acc399ceab068d49df047bc3156aae9fc970"",1,False,""2562"",""java.lang.NullPointerException
+	at org.apache.fontbox.cff.CFFParser.parseFont(CFFParser.java:517)
+	at org.apache.fontbox.cff.CFFParser.parse(CFFParser.java:122)
+	at org.apache.fontbox.cff.CFFParser.parse(CFFParser.java:75)
+	at org.apache.pdfbox.pdmodel.font.PDType1CFont.<init>(PDType1CFont.java:103)
+	at org.apache.pdfbox.pdmodel.font.PDFontFactory.createFont(PDFontFactory.java:74)
+	at org.apache.pdfbox.pdmodel.PDResources.getFont(PDResources.java:146)
+	at org.apache.pdfbox.contentstream.operator.text.SetFontAndSize.process(SetFontAndSize.java:66)
+	at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:966)
+	at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:541)
+	at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:516)
+	at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+	at org.apache.pdfbox.text.LegacyPDFStreamEngine.processPage(LegacyPDFStreamEngine.java:155)
+{noformat}",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Sep 10 03:02:26 UTC 2022,,,,,,,,,,"0|z18gkw:",9223372036854775807,,,,,,,,,,,,,,,,,,,"10/Sep/22 03:01;jira-bot;Commit 1903952 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903952 ]
+
+PDFBOX-5504: avoid NPE;;;","10/Sep/22 03:02;jira-bot;Commit 1903953 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903953 ]
+
+PDFBOX-5504: avoid NPE;;;",,,,,,,,,,,,,,,
+NullPointerException in PDType0Font.readCode() if cMap is null,PDFBOX-5500,13480378,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,07/Sep/22 03:11,29/Sep/22 17:57,07/May/23 20:06,07/Sep/22 03:47,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,,,,0,,,Can happen if /Encoding is null because {{cMap}} is never initialized.,,,,,,,,,,,TIKA-3847,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Sep 07 03:47:59 UTC 2022,,,,,,,,,,"0|z18d2o:",9223372036854775807,,,,,,,,,,,,,,,,,,,"07/Sep/22 03:45;jira-bot;Commit 1903906 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903906 ]
+
+PDFBOX-5500: avoid NPE;;;","07/Sep/22 03:46;jira-bot;Commit 1903907 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903907 ]
+
+PDFBOX-5500: avoid NPE;;;","07/Sep/22 03:47;tilman;I don't know if this fix is the best possible decision but the code suggests that there is a legitimate purpose to load a font with /Encoding missing.;;;",,,,,,,,,,,,,,
+OutOfMemoryError - PDFMergerUtility,PDFBOX-5497,13478666,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Problem,,vmerkel,vmerkel,25/Aug/22 14:19,26/Aug/22 08:23,07/May/23 20:06,26/Aug/22 08:23,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Utilities,,,0,,,"Merging a lot of small PDFs by using the PDFMergerUtility results in a java.lang.OutOfMemoryError.
+
+Code to reproduce:
+{code:java}
+package test.pdfbox.merge;
+
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.multipdf.PDFMergerUtility.DocumentMergeMode;
+
+public class PDFMergeTest {
+
+    public static void main(String[] args) throws IOException {
+
+        if (args.length == 0) {
+            System.out.println(""No source folder set"");
+            return;
+        }
+
+
+        File folder = new File(args[0]);
+
+        PDFMergerUtility merger = new PDFMergerUtility();
+
+        merger.setDestinationFileName(folder.toString() + ""\\merged.pdf"");
+        merger.setDocumentMergeMode(DocumentMergeMode.OPTIMIZE_RESOURCES_MODE); // has no effect
+
+        //adding the source files (except merged.pdf)
+        for (File file : folder.listFiles()) {
+            if (!file.getName().equals(""merged.pdf"")) {
+                merger.addSource(file);
+            }
+        }
+
+        mrger.mergeDocuments(MemoryUsageSetting.setupTempFileOnly());
+        System.out.println(""DONE"");
+     }
+}
+
+{code}
+Create a new source folder, put a simple PDF document (like the one from [https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf] for example), make 1000 copies of it and run the code above with the new created folder as argument and the following Java VM args:
+{noformat}
+-Xms128M -Xmx128M{noformat}
+This results in a OutOfMemory error. Switching the document merge mode to OPTIMIZE_RESOURCES_MODE does not fix the problem.
+
+Does PDFBox not close the PDF sources properly?
+
+ 
+
+Increasing the memory is not an option because this problem relates to the sizes of the source documents. Is there any option to directly write the new PDF to output stream without holding it in memory?",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,Java,Fri Aug 26 08:23:54 UTC 2022,,,,,,,,,,"0|z182mg:",9223372036854775807,,,,,,,,,,,,,,,,,,,"26/Aug/22 02:21;tilman;{{-Xmx128m}}, seriously? Merging a lot of small PDFs means you're gonna have a large one.
+
+{quote}
+Is there any option to directly stream the content to an OutputStream without consuming the final PDF in memory?
+{quote}
+No, there isn't. PDF isn't something like HTML.;;;","26/Aug/22 08:23;vmerkel;Hello Tilman,
+
+thanks for the quick response!
+
+You're right ,128 MB in this case is probably way to less.
+
+Will close this defect.;;;","26/Aug/22 08:23;vmerkel;See comments;;;",,,,,,,,,,,,,,
+The order of text extracted from PDF by PDFTextStripper is incorrect.,PDFBOX-5492,13476565,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Bug,,fredyu,fredyu,12/Aug/22 12:25,12/Aug/22 14:34,07/May/23 20:06,12/Aug/22 14:34,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Documentation,PDModel,,0,,," With  pdfbox version 2.0.6
+
+following code get the text extracted from the pdf file which attached in Attachment:
+
+{color:#00875a}def getTextFromPdf(filename: String):Some[String] = {{color}
+{color:#00875a}    var textContent :Some[String]= null{color}
+{color:#00875a}         try {{color}
+{color:#00875a}              val doc :PDDocument = PDDocument.load(new File(filename)){color}
+{color:#00875a}              val docInfo :PDDocumentInformation = doc.getDocumentInformation();{color}
+{color:#00875a}              val stripper = new PDFTextStripper{color}
+{color:#00875a}              stripper.setStartPage(1){color}
+{color:#00875a}              stripper.setEndPage(1){color}
+{color:#00875a}              textContent = Some(stripper.getText(doc)){color}
+
+ 
+
+Output:
+
+    ...........
+ * (1) Written Premium Collected by the Bank{color:#de350b} 0.00US$                     0.00US$                               0.00US$                      0.00US$                        0.00US$                          0.00US$ {color}                        
+(2) Increase (Decrease) in Uearned Premium Reserve {color:#de350b}0.00US$                     (72.04)US$                          (72.04)US$                  0.00US$                        (272.31)US${color}                    (272.31)US$                   
+(3) Earned Premium ((Reinsurance Premium) (1)- (2)) 0.00US$                     72.04US$                             72.04US$                     0.00US$                        272.31US$                       272.31US$                     {color}
+(4) Currency Tax (Impuesto Divisas) [2% of (3)] {color:#de350b}0.00US$                     1.44US$                               1.44US$                      0.00US$                        5.45US$                          5.45US$  {color}                       
+(5) Ceding Allowance [5.8% of (3)] {color:#de350b}$ 0.00 0.00US$                     4.18US$                               4.18US$                      0.00US$                        15.79US$                        15.79US$  {color}
+
+.........
+
+Expect:  All the money field should be in correct order, like:
+ * Written Premium Collected by the Bank{color:#de350b} US$ 0.00                    US$0.00                               US$0.00                      US$0.00                       US$0.00                          US$0.00 {color} ",Windows 11  + Intellij +  Spark3.12 + scala2.12,,,,,,,,,,,"12/Aug/22 12:35;tilman;sample-sorted.txt;https://issues.apache.org/jira/secure/attachment/13048058/sample-sorted.txt","12/Aug/22 12:35;tilman;sample-unsorted.txt;https://issues.apache.org/jira/secure/attachment/13048059/sample-unsorted.txt","12/Aug/22 12:08;fredyu;sample.pdf;https://issues.apache.org/jira/secure/attachment/13048057/sample.pdf",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,Patch,,,,,,,,9223372036854775807,,,,Fri Aug 12 14:34:27 UTC 2022,,,,,,,,,,"0|z17pps:",9223372036854775807,,,,,,,,,,,,,,,,,,,"12/Aug/22 12:35;tilman;The order is the order it is in the PDF, which can be quite weird. You can get sorted text when you use the flag (not sure if this output is useful). [^sample-sorted.txt] 
+
+For tables you should try a tool like Tabula.;;;","12/Aug/22 12:59;fredyu;Thanks Hausherr for your quikly response, May I have the sample code which the ""sample-sorted"" file created from ?
+
+ ;;;","12/Aug/22 13:21;tilman;I used the command line tool. But you can do that too by using {{stripper.setSortByPosition(true)}}.;;;","12/Aug/22 13:34;fredyu;Thanks Hausherr' help, I got the the correct output, and will close the issue soon.
+
+ ;;;","12/Aug/22 14:34;fredyu;After adding stripper.setSortByPosition(true), get correct text extracting from Pdf file.;;;",,,,,,,,,,,,
+Transparency Group images slightly cropped,PDFBOX-5491,13476298,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,henry-canva,henry-canva,11/Aug/22 04:59,17/Aug/22 02:39,07/May/23 20:06,,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,"When importing the following file: [^tg-cropped.pdf]
+
+The resulting image (that comes from a Transparency Group) it's slightly cropped from the bottom:
+
+!image-2022-08-11-14-50-33-042.png!
+
+Similarly with this other file: [^bullet-points-cropped.pdf], the icons and bullet points are Transparency Groups that render slightly cropped.
+
+!image-2022-08-11-14-55-38-711.png!
+
+Increasing the `pageScale` in `PageDrawer` helps but you even when set it to 4x the artifact it's still noticeable.
+
+ ",,,,,,,,,,,,"17/Aug/22 02:32;tilman;PDFBOX-5491-1-new.jpg;https://issues.apache.org/jira/secure/attachment/13048207/PDFBOX-5491-1-new.jpg","17/Aug/22 02:32;tilman;PDFBOX-5491-1-old.jpg;https://issues.apache.org/jira/secure/attachment/13048208/PDFBOX-5491-1-old.jpg","11/Aug/22 04:52;henry-canva;bullet-points-cropped.pdf;https://issues.apache.org/jira/secure/attachment/13047997/bullet-points-cropped.pdf","11/Aug/22 04:50;henry-canva;image-2022-08-11-14-50-33-042.png;https://issues.apache.org/jira/secure/attachment/13047999/image-2022-08-11-14-50-33-042.png","11/Aug/22 04:55;henry-canva;image-2022-08-11-14-55-38-711.png;https://issues.apache.org/jira/secure/attachment/13047996/image-2022-08-11-14-55-38-711.png","11/Aug/22 04:50;henry-canva;tg-cropped.pdf;https://issues.apache.org/jira/secure/attachment/13047998/tg-cropped.pdf",,,,,,,,,,,,,6.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Aug 17 02:32:30 UTC 2022,,,,,,,,,,"0|z17o2o:",9223372036854775807,,,,,,,,,,,,,,,,,,,"17/Aug/22 02:32;tilman;I played a bit with this and added a line that is identical to the clipping path and also saved the image of the transparency group. The line shows that the shape begins one pixel too low.
+The image of the shape does also have one empty pixel line on top.
+
+Changing {{minY = (int) Math.floor(bounds.getMinY());}} in {{PageDrawer.java}} to use ""round"" instead of ""floor"" brings a better image so this is definitively somewhere to look at.
+
+{{bounds.getMinY()}} is 221.71 so {{floor}} reduces this to 221 which is almost a full pixel.
+
+I tried to compensate this by adding {{g.translate(minX - bounds.getMinX(), minY - bounds.getMinY());}} before ""flip y-axis"", and also doing a better calculation for width/height {{Math.ceil(bounds.getWidth())}} but now it seems there's a bit missing on top.
+
+
+Oh, the other file with the bullet points still looks terrible despite the changes.;;;",,,,,,,,,,,,,,,,
+JPEG image rendered with wrong colors when using TwelveMonkeys,PDFBOX-5488,13475515,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,06/Aug/22 03:05,29/Sep/22 17:57,07/May/23 20:06,06/Aug/22 04:03,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,Rendering,,,0,,,"File from https://www.ets.org/Media/Tests/GRE/pdf/gre_research_validity_data.pdf and reported by Daniel in the mailing list 
+https://lists.apache.org/thread/nsc115f3hwm9sgtq7ot5o8qnc2tqxgp6
+
+The problem doesn't happen when the standard ImageIO is used.",,,,,,,,,,,,"06/Aug/22 03:04;tilman;gre_research_validity_data.pdf;https://issues.apache.org/jira/secure/attachment/13047800/gre_research_validity_data.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Aug 06 03:57:35 UTC 2022,,,,,,,,,,"0|z17jaw:",9223372036854775807,,,,,,,,,,,,,,,,,,,"06/Aug/22 03:11;tilman;The cause is that {{getAdobeTransform()}} returns 0 without throwing an exception although it is a YCbCr image so we should look up that one as well
+{code}
+<?xml version=""1.0"" encoding=""UTF-8""?>
+<javax_imageio_1.0>
+  <Chroma>
+    <ColorSpaceType name=""YCbCr""/>
+    <NumChannels value=""4""/>
+  </Chroma>
+  <Compression>
+    <CompressionTypeName value=""JPEG""/>
+    <Lossless value=""FALSE""/>
+    <NumProgressiveScans value=""1""/>
+  </Compression>
+  <Dimension>
+    <PixelAspectRatio value=""1.0""/>
+    <ImageOrientation value=""Normal""/>
+    <HorizontalPixelSize value=""0.16933332""/>
+    <VerticalPixelSize value=""0.16933332""/>
+  </Dimension>
+  <Transparency>
+    <Alpha value=""nonpremultipled""/>
+  </Transparency>
+</javax_imageio_1.0>
+{code};;;","06/Aug/22 03:57;jira-bot;Commit 1903246 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903246 ]
+
+PDFBOX-5488: get ColorSpaceType name from javax_imageio_1.0;;;","06/Aug/22 03:57;jira-bot;Commit 1903247 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903247 ]
+
+PDFBOX-5488: get ColorSpaceType name from javax_imageio_1.0;;;",,,,,,,,,,,,,,
+PDFRenderer does not render letters when converting page to image,PDFBOX-5484,13474766,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,apsubramanian,apsubramanian,02/Aug/22 21:22,29/Sep/22 17:57,07/May/23 20:06,05/Aug/22 03:20,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,1,,,"Hello,
+
+I'm using {{PDFRenderer.renderImageWithDPI}} to convert pages of the attached PDF to images. However, some of the characters disappear and look like blank spaces after converting the page to an image (please see attached image).",,,,,,,,,,,PDFBOX-4755,"02/Aug/22 21:25;apsubramanian;PDF-with-the-issue.pdf;https://issues.apache.org/jira/secure/attachment/13047559/PDF-with-the-issue.pdf","03/Aug/22 04:11;tilman;PDFBOX-5484.ttf;https://issues.apache.org/jira/secure/attachment/13047577/PDFBOX-5484.ttf","02/Aug/22 21:24;apsubramanian;letters-missing.png;https://issues.apache.org/jira/secure/attachment/13047558/letters-missing.png","03/Aug/22 06:35;tilman;screenshot-1.png;https://issues.apache.org/jira/secure/attachment/13047593/screenshot-1.png","03/Aug/22 06:50;tilman;screenshot-2.png;https://issues.apache.org/jira/secure/attachment/13047597/screenshot-2.png",,,,,,,,,,,,,,5.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Aug 05 03:20:09 UTC 2022,,,,,,,,,,"0|z17ep4:",9223372036854775807,,,,,,,,,,,,,,,,,,,"03/Aug/22 04:10;tilman;Effect can be observed with the scandinavian crossed out small ""o"", in the TrueType font TT1 (ZPYENO+Helvetica). Code octal 0370 (dec 248) = ""oslash"". The font itself has ""oslash"" at position 161 so it's unclear why it doesn't work, more investigation is needed.
+
+update:
+In PDFDebugger {{font.getPath(248)}} returns an empty path.;;;","03/Aug/22 06:01;lehmi;I've checked different versions and it is not a recent regression. It doesn't work in any 2.0.x or 3.0.x version. BUT it works in 1.8.15 ;;;","03/Aug/22 06:14;lehmi;[~tilman] I've observed the same but it is related to font TT2. TT1 doesn't contain ""oslash"". Maybe you simply mixed them up ;-);;;","03/Aug/22 06:36;tilman;Maybe we're both right. I looked at this one, in the first content stream. PDFDebugger doesn't show the glyph, but DTL does
+{code}
+/P << /Lang (da-DK) /MCID 5 >> BDC
+  BT
+    0 0 0 0.95 k
+    /TT1 1 Tf
+    0 Tc
+    10.5 0 0 10.5 66.6149 332.7294 Tm
+    (Milj\370m\346ssig b\346redygtighed er en dagsorden, som for alvor tr\346nger sig p\345 i hele ) Tj
+  ET
+EMC
+{code}
+ !screenshot-1.png! ;;;","03/Aug/22 06:50;tilman; !screenshot-2.png! ;;;","03/Aug/22 06:52;tilman;I looked at tt2, there the oslash is displayed in PDFDebugger. That's a bold font, that's the orange text in the middle that is displayed properly.;;;","03/Aug/22 15:53;jira-bot;Commit 1903211 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903211 ]
+
+PDFBOX-5484: create path for (0, 3) cmap tables;;;","03/Aug/22 15:53;jira-bot;Commit 1903212 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903212 ]
+
+PDFBOX-5484: create path for (0, 3) cmap tables;;;","03/Aug/22 15:55;tilman;The problem was that the font has an unusual cmap table combination and we ended up with a mac table that pointed to the wrong gid.;;;","03/Aug/22 17:33;jira-bot;Commit 1903215 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903215 ]
+
+PDFBOX-5484: load test file;;;","03/Aug/22 17:33;jira-bot;Commit 1903216 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903216 ]
+
+PDFBOX-5484: load test file;;;","03/Aug/22 17:42;jira-bot;Commit 1903217 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1903217 ]
+
+PDFBOX-5484: add test;;;","03/Aug/22 18:21;jira-bot;Commit 1903218 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1903218 ]
+
+PDFBOX-5484: add test;;;","04/Aug/22 05:29;lehmi;[~tilman] looks like I mixed up the content streams and my conclusion, sorry for the noise. However, you found the root cause and a solution. Good work, as usual (y);;;","05/Aug/22 03:20;tilman;[~apsubramanian] Thanks for reporting!
+[~lehmi] Thanks!;;;",,
+print pdf to desktop font not supoort,PDFBOX-5482,13473831,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Duplicate,,loonglove,loonglove,27/Jul/22 17:20,27/Jul/22 18:22,07/May/23 20:06,27/Jul/22 18:22,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Documentation,,,0,,,"When I use pdfbox to print this PDF file to the printer, the fonts in the PDF are messed up, I tried many solutions, and finally didn't solve this problem, I hope you can give me a good suggestion, thank you","设备名称	DESKTOP-KN1RFOG
+处理器	Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz   2.59 GHz
+机带 RAM	16.0 GB (15.9 GB 可用)
+设备 ID	D9C36C84-A1DF-4218-AFEE-15800B73C6D6
+产品 ID	00391-70000-00000-AA999
+系统类型	64 位操作系统, 基于 x64 的处理器
+笔和触控	没有可用于此显示器的笔或触控输入
+版本	Windows 11 专业工作站版
+版本	22H2
+安装日期	‎2022/‎7/‎16
+操作系统版本	22621.232
+体验	Windows Feature Experience Pack 1000.22632.1000.0
+",,,,,,,,,PDFBOX-3293,,"27/Jul/22 17:16;loonglove;0824553614.pdf;https://issues.apache.org/jira/secure/attachment/13047292/0824553614.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,"PDDocument doc = Loader.loadPDF(new File(""C:\\Users\\15497\\Desktop\\0824553614.pdf""));
+PrintService service = PrintServiceLookup.lookupDefaultPrintService();
+PrinterJob job = PrinterJob.getPrinterJob();
+job.setPageable(new PDFPageable(doc));
+job.setPrintService(service);
+job.print();",false,,,,,,,,,,,,,,,,,9223372036854775807,,,java,Wed Jul 27 18:18:36 UTC 2022,,,,,,,,,,"0|z178xs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"27/Jul/22 17:38;tilman;Probably duplicate of PDFBOX-3293. The only solution would be to use a different font in that document. I hope that you or your company are the creator of that document...;;;","27/Jul/22 17:45;tilman;The fonts used are: 
+DEVEXP+標楷體,Bold
+DEVEXP+標楷體
+DEVEXP+新細明體
+DEVEXP+標楷體
+
+I wonder if these are the same as the ones mentioned in PDFBOX-3293.
+;;;","27/Jul/22 18:01;loonglove;yes,pdf contain 標楷體,print tips Warning this font，i search in google not fonud this,thank you give me support.;;;","27/Jul/22 18:12;tilman;PDFBOX-3293 is an unsolved problem with requires major work. The best solution would be that the creator of this label uses a different font.
+
+Another solution would be to use the solution that Alexandr Scherbatiy did, which is using the jdk font engine instead of the PDFBox font engine, and see whether this works.
+https://bugs.openjdk.org/browse/JDK-8265761;;;","27/Jul/22 18:18;loonglove;OK，This problem can be closed.Thank you for giving me so many suggestions;;;",,,,,,,,,,,,
+PDDocument.load thows IOException in PDF,PDFBOX-5480,13472858,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Problem,,patrick_kochan,patrick_kochan,22/Jul/22 09:02,29/Jul/22 14:04,07/May/23 20:06,29/Jul/22 14:01,2.0.25,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Parsing,PDModel,,0,,,"I use the PDDocument in my application and noticed that the load method throws an IOException (Error: End-of-File, expected line) with certain PDF files like the one in the attachment.
+
+ 
+
+My code:
+
+ 
+{code:java}
+protected List<String> getLocalPages(final Resource completeEditionResource, final Edition edition, final int firstPage) throws Exception {
+        PDDocument document = null;
+        try {
+            final InputStream in = completeEditionResource.getInputStream();
+            document = PDDocument.load(in, MemoryUsageSetting.setupTempFileOnly());
+        }
+        PdfUtils.disableImageCache(document);
+        return splitAndSavePages(document, firstPage, completeEditionResource, edition.getPublishedDate());
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            completeEditionResource.getInputStream().reset();
+        }
+}{code}
+ 
+
+Exception thrown:
+
+ 
+{code:java}
+java.io.IOException: Error: End-of-File, expected line
+    at org.apache.pdfbox.pdfparser.BaseParser.readLine(BaseParser.java:1107)
+    at org.apache.pdfbox.pdfparser.COSParser.parseHeader(COSParser.java:2650)
+    at org.apache.pdfbox.pdfparser.COSParser.parsePDFHeader(COSParser.java:2633)
+    at org.apache.pdfbox.pdfparser.PDFParser.parse(PDFParser.java:219)
+    at org.apache.pdfbox.pdmodel.PDDocument.load(PDDocument.java:1230)
+    at org.apache.pdfbox.pdmodel.PDDocument.load(PDDocument.java:1148)
+    at com.flip.CompletePdfAnalyzer.getLocalPages(CompletePdfAnalyzer.java:162){code}
+ 
+
+ 
+
+I successfully downloaded the PDF using FileUtils.copyInputStreamToFile from Apache Commons-IO just before PDDocument.load to verify that the inputStream was correct.
+
+ ","Ubuntu 20.04.4 LTS
+Java OpenJDK 11.0.12-open",,,,,,,,,,,"22/Jul/22 08:39;patrick_kochan;example.pdf;https://issues.apache.org/jira/secure/attachment/13047115/example.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Jul 29 14:04:13 UTC 2022,,,,,,,,,,"0|z172xs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"22/Jul/22 14:42;lehmi;The attached file works like a charme. Maybe you overlooked some issue with the input stream? Maybe it wasn't complete?
+;;;","29/Jul/22 14:04;patrick_kochan;[~lehmi] I'm sorry for the trouble I've caused. I realized it was an issue related solely to my VPN and not the PDFBox. Anyway, thank you for your effort.;;;",,,,,,,,,,,,,,,
+Can't write text to the last page,PDFBOX-5478,13472102,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,Invalid,,dylanyau,dylanyau,18/Jul/22 15:06,18/Jul/22 17:19,07/May/23 20:06,18/Jul/22 17:19,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,"Can't write a text to the last page :( This text is should be below the table, but this code can't do it, which method can i use to write the text dynamically? thx!",Windows10,,,,,,,,,,,"18/Jul/22 15:08;dylanyau;code.png;https://issues.apache.org/jira/secure/attachment/13046921/code.png",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Mon Jul 18 15:14:41 UTC 2022,,,,,,,,,,"0|z16ya8:",9223372036854775807,,,,,,,,,,,,,,,,,,,"18/Jul/22 15:14;msahyoun;For the new content you'd like to add use
+
+[https://pdfbox.apache.org/docs/2.0.8/javadocs/org/apache/pdfbox/pdmodel/PDPageContentStream.html#PDPageContentStream(org.apache.pdfbox.pdmodel.PDDocument,%20org.apache.pdfbox.pdmodel.PDPage,%20org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode,%20boolean,%20boolean)]
+
+And you don't have to add the page again. You can reuse the existing page as you'd like to add content to the already existing page.
+
+Hope that helps.
+
+ 
+
+BTW. this question is better asked on the users mailing list  [https://pdfbox.apache.org/mailinglists.html]  as this is a bug tracker.
+
+ ;;;",,,,,,,,,,,,,,,,
+PDF file size problem,PDFBOX-5477,13471506,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Trivial,Not A Bug,,dylanyau,dylanyau,14/Jul/22 03:17,15/Jul/22 17:47,07/May/23 20:06,15/Jul/22 17:47,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,"I use PDFBOX to generate PDF files, it's a great library, but I found that when I use PDType0Font to load Chinese fonts, the file size will become very large, it will come to 5MB, when I switch the library's PDType0Font to load font , it's only 1KB in size. how to reduce file size when using custom fonts?",Window10,,,,,,,,,,,"14/Jul/22 03:19;dylanyau;code.png;https://issues.apache.org/jira/secure/attachment/13046737/code.png","14/Jul/22 03:20;dylanyau;file size.png;https://issues.apache.org/jira/secure/attachment/13046736/file+size.png",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Jul 15 17:47:02 UTC 2022,,,,,,,,,,"0|z16um0:",9223372036854775807,,,,,,,,,,,,,,,,,,,"14/Jul/22 04:17;tilman;EmbedSubset should be true, unless you're working with form fields. You should have used the shorter method that uses a file, that uses subsetting by default.;;;","15/Jul/22 17:47;tilman;Closing as this isn't a bug. You can still comment and/or reopen. I hope my comment solved your problem.;;;",,,,,,,,,,,,,,,
+"Error: Expected operator 'ID' actual='In' at stream offset 142897 []"" error occurs in some pdf",PDFBOX-5476,13470729,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,elodie.lebouvier,elodie.lebouvier,08/Jul/22 16:05,08/Jul/22 16:15,07/May/23 20:06,,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,"Hi,
+
+While we upload some PDF, we encounter an error like this : ""Error: Expected operator 'ID' actual='In' at stream offset 142897 []""
+
+ 
+
+We used *2.0.25 pdfbox version* and we also tried *2.0.26* and it will also work fine in some pdf, but not with others.
+
+ 
+
++Code :+
+
+public static boolean extractFirstPdfPageAsImageJPEG(final File sourcePdf, final File resultImg,
+
+                                          final Integer maxWidth, final Integer maxHeight) {
+
+                            try (final PDDocument document = PDDocument.load(sourcePdf)) {
+
+                                          final PDFRenderer pdfRenderer = new PDFRenderer(document);
+
+                                          final BufferedImage extractedImage = pdfRenderer.renderImageWithDPI(0, 100, ImageType.RGB);
+
+ 
+
+                                          final int originalHeight = extractedImage.getHeight();
+
+                                          final int originalWidth = extractedImage.getWidth();
+
+ 
+
+                                          int scaledHeight = originalHeight;
+
+                                          int scaledWidth = originalWidth;
+
+ 
+
+                                          if (originalWidth > maxWidth) {
+
+                                                         scaledWidth = maxWidth;
+
+                                                         scaledHeight = scaledWidth * originalHeight / originalWidth;
+
+                                                         if (scaledHeight > maxHeight) {
+
+                                                                       scaledHeight = maxHeight;
+
+                                                                       scaledWidth = scaledHeight * originalWidth / originalHeight;
+
+                                                         }
+
+                                          } else if (originalHeight > maxHeight) {
+
+                                                         scaledHeight = maxHeight;
+
+                                                         scaledWidth = scaledHeight * originalWidth / originalHeight;
+
+                                          }
+
+ 
+
+                                          // creates output image
+
+                                          final BufferedImage resizedImage = new BufferedImage(scaledWidth, scaledHeight, extractedImage.getType());
+
+ 
+
+                                          final Graphics2D g2d = resizedImage.createGraphics();
+
+                                          g2d.drawImage(extractedImage, 0, 0, scaledWidth, scaledHeight, null);
+
+                                          g2d.dispose();
+
+                                          ImageIO.write(resizedImage, ""JPEG"", resultImg);
+
+                                          return true;
+
+                            } catch (final IOException e) {
+
+                                          LOG.error(e.getMessage(), e);
+
+                                          return false;
+
+                            }
+
+              }
+
+ 
+
+  this *pdfRenderer.renderImageWithDPI(0, 100, ImageType.RGB)* method will generate error :
+
+ 
+
+Error: Expected operator 'ID' actual='In' at stream offset 142897 []
+
+java.io.IOException: Error: Expected operator 'ID' actual='In' at stream offset 142897
+
+              at org.apache.pdfbox.pdfparser.PDFStreamParser.parseNextToken(PDFStreamParser.java:280) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:521) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:492) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:282) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:355) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:272) ~[pdfbox-2.0.25.jar:2.0.25]
+
+              at org.apache.pdfbox.rendering.PDFRenderer.renderImageWithDPI(PDFRenderer.java:258) ~[pdfbox-2.0.25.jar:2.0.25]
+
+ 
+
+Is it a known bug ? Do you know when it will be fixed ? 
+
+Thanks a lot,
+
+Regards.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Jul 08 16:14:50 UTC 2022,,,,,,,,,,"0|z16pu0:",9223372036854775807,,,,,,,,,,,,,,,,,,,"08/Jul/22 16:14;tilman;Please attach your PDF. This looks like a syntax error in a page content stream. After an ""I"" it expects a ""D"", anything else is an error.;;;",,,,,,,,,,,,,,,,
+Can't get the family font name of the specified font.,PDFBOX-5473,13470047,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Won't Do,,berylbai,berylbai,05/Jul/22 06:03,06/Jul/22 15:53,07/May/23 20:06,06/Jul/22 15:53,2.0.24,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,"Run the following code, you will see the family name of this font is null.
+{code:java}
+System.setProperty(""sun.java2d.cmm"", ""sun.java2d.cmm.kcms.KcmsServiceProvider"");  
+
+PDDocument doc = new PDDocument();
+PDPage page = new PDPage(PDRectangle.A4);
+doc.addPage(page);
+PDPageContentStream contentStream = new PDPageContentStream(doc, page);        TrueTypeFont ttFont = new TTFParser().parse(new File(""현대하모니 L.ttf""));
+PDFont font = PDType0Font.load(doc, ttFont, true);        
+
+String name = ttFont.getNaming().getFontFamily();
+
+contentStream.beginText();
+contentStream.newLineAtOffset(50, 800);
+contentStream.setFont(font, 48);
+contentStream.showText(""abc"");
+contentStream.endText();       
+contentStream.close();
+
+doc.save(""pdfbox.pdf"");
+doc.close();
+System.out.println(name); {code}",,,,,,,,,,,,"06/Jul/22 03:54;tilman;image-2022-07-06-05-54-22-068.png;https://issues.apache.org/jira/secure/attachment/13046335/image-2022-07-06-05-54-22-068.png","05/Jul/22 06:03;berylbai;현대하모니 L.ttf;https://issues.apache.org/jira/secure/attachment/13046251/%ED%98%84%EB%8C%80%ED%95%98%EB%AA%A8%EB%8B%88+L.ttf",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Jul 06 15:53:41 UTC 2022,,,,,,,,,,"0|z16lps:",9223372036854775807,,,,,,,,,,,,,,,,,,,"05/Jul/22 07:00;tilman;That's because this information isn't in the font in the unicode platformid, {-}which is the only one we consider{-}. We do support other platformIDs but only the 1033 languageID. Note the missing ""1"" nameID in the first series. The 2nd series has a ""1"" but it has a unusual language value. I tried to hard-code it -but got junk so that's a deeper problem- then we get the correct text (I was confused by my IDE).
+
+!image-2022-07-06-05-54-22-068.png!;;;","06/Jul/22 15:52;tilman;IMHO this font table has been botched. I entered the Korean ""font family"" into google translate and it means ""Hyundai Harmony L"". Thus nothing surprising, or that would make no sense in english. They used ""harmony"" in other parts of the english table so I don't understand why they skipped it. Maybe try to find a more recent version of that font.
+
+You can get the font family name with this code:
+{code:java}
+String name = ttFont.getName(NameRecord.NAME_FONT_FAMILY_NAME, NameRecord.PLATFORM_WINDOWS, NameRecord.ENCODING_WINDOWS_UNICODE_BMP, 1042)
+{code}
+You could also implement a more general ""desperate"" fallback if the name is null:
+{code:java}
+for (NameRecord nr : ttf.getNaming().getNameRecords())
+{
+	if (nr.getNameId() == NameRecord.NAME_FONT_FAMILY_NAME)
+	{
+		name = nr.getString();
+	}
+}
+{code};;;","06/Jul/22 15:53;tilman;Closing because IMHO the workaround is good enough as a solution for now. You can still comment or reopen.;;;",,,,,,,,,,,,,,
+NPE when Transparency Group is missing the BBox,PDFBOX-5471,13469858,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,henry-canva,henry-canva,04/Jul/22 05:10,29/Sep/22 17:57,07/May/23 20:06,04/Jul/22 17:13,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,Rendering,,,1,,,"Some files contain transparency groups with no {{{}BBox{}}}. When this happens, PDFBox rendering code throws a {{NullPointerException}} in the {{TransparencyGroup}} constructor:
+
+ 
+{code:java}
+// transform the bbox
+GeneralPath transformedBox = form.getBBox().transform(transform);
+                                  \_______/ 
+                               NPE when its null{code}
+The following is a screenshot taken from {{pdf-debugger}} when trying to open a file with has this issue:
+
+!image-2022-07-04-14-55-28-527.png!
+
+The stack trace:
+{code:java}
+java.lang.RuntimeException: java.util.concurrent.ExecutionException: java.lang.NullPointerException: Cannot invoke ""org.apache.pdfbox.pdmodel.common.PDRectangle.transform(org.apache.pdfbox.util.Matrix)"" because the return value of ""org.apache.pdfbox.pdmodel.graphics.form.PDTransparencyGroup.getBBox()"" is null
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.done(PagePane.java:485)
+    java.desktop/sun.swing.AccumulativeRunnable.run(AccumulativeRunnable.java:112)
+    java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
+    java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+Caused by: java.util.concurrent.ExecutionException: java.lang.NullPointerException: Cannot invoke ""org.apache.pdfbox.pdmodel.common.PDRectangle.transform(org.apache.pdfbox.util.Matrix)"" because the return value of ""org.apache.pdfbox.pdmodel.graphics.form.PDTransparencyGroup.getBBox()"" is null
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.done(PagePane.java:465)
+    java.desktop/sun.swing.AccumulativeRunnable.run(AccumulativeRunnable.java:112)
+    java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
+    java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+Caused by: java.lang.NullPointerException: Cannot invoke ""org.apache.pdfbox.pdmodel.common.PDRectangle.transform(org.apache.pdfbox.util.Matrix)"" because the return value of ""org.apache.pdfbox.pdmodel.graphics.form.PDTransparencyGroup.getBBox()"" is null
+    org.apache.pdfbox.rendering.PageDrawer$TransparencyGroup.<init>(PageDrawer.java:1672)
+    org.apache.pdfbox.rendering.PageDrawer$TransparencyGroup.<init>(PageDrawer.java:1637)
+    org.apache.pdfbox.rendering.PageDrawer.showTransparencyGroupOnGraphics(PageDrawer.java:1575)
+    org.apache.pdfbox.rendering.PageDrawer.showTransparencyGroup(PageDrawer.java:1553)
+    org.apache.pdfbox.contentstream.operator.graphics.DrawObject.process(DrawObject.java:81)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:966)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:541)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:516)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+    org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:279)
+    org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:355)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:453)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:435)
+    java.base/java.lang.Thread.run(Thread.java:832)
+ {code}
+The following is an example file that reproduces this problem:
+
+[^getbbox-null.pdf]
+
+ 
+
+A potential fix PR: https://github.com/apache/pdfbox/pull/145",,,,,,,,,,,,"04/Jul/22 05:07;henry-canva;getbbox-null.pdf;https://issues.apache.org/jira/secure/attachment/13046199/getbbox-null.pdf","04/Jul/22 04:55;henry-canva;image-2022-07-04-14-55-28-527.png;https://issues.apache.org/jira/secure/attachment/13046200/image-2022-07-04-14-55-28-527.png",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Mon Jul 04 17:13:29 UTC 2022,,,,,,,,,,"0|z16kjs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"04/Jul/22 06:43;jira-bot;Commit 1902447 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1902447 ]
+
+PDFBOX-5471: avoid NPE, as suggested by Henry Iguaro; closes #145;;;","04/Jul/22 06:43;jira-bot;Commit 1902448 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902448 ]
+
+PDFBOX-5471: avoid NPE, as suggested by Henry Iguaro; closes #145;;;","04/Jul/22 10:26;mkl;Strictly speaking the missing *BBox* entry is an error. You may consider at least logging a warning.;;;","04/Jul/22 17:12;jira-bot;Commit 1902461 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1902461 ]
+
+PDFBOX-5471: add warning, as suggested by Michael Klink;;;","04/Jul/22 17:12;jira-bot;Commit 1902462 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902462 ]
+
+PDFBOX-5471: add warning, as suggested by Michael Klink;;;","04/Jul/22 17:13;tilman;[~mkl] indeed! + done
+[~henry-canva] thanks for the report!
+
+snapshot at
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;",,,,,,,,,,,
+PDActionEmbeddedGoTo does not accept a Destination with a page number or string,PDFBOX-5470,13469801,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,Fixed,tilman,giladd,giladd,03/Jul/22 09:50,29/Sep/22 17:57,07/May/23 20:06,06/Jul/22 03:43,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,AcroForm,,,0,,,"According to Table 202 of the PDF 32000-1:2008 specs, the P key under the Target Directory of an Embedded Go-To Action is an ""integer or byte string"", with the following description ""If the value is an integer, it specifies the page number (zero-based) in the current document containing the file attachment annotation. If the value is a string, it specifies a named destination in the current document that provides the page number of the file attachment annotation.""
+
+
+However, the current implementation of PDActionEmbeddedGoTo does not accept using the setPageNumber command by itself when setting the Destination dictionary, and throws an IllegalArgumentException unless setPage is used to set the target page as a PDPage object, which is not specified in the documentation. Also, there doesn't seem to be a way to specify the target as a string, if a named destination is to be used.
+This applies to both the Destination dictionary and the Target Directory, but when creating such a link in Acrobat the Target Directory does not contain a P value at all, only the Destination dictionary does, and in the form of a number. This should be possible to replicate using PDFBox.
+
+ 
+
+Attached are a sample file with a pre-existing link and a PDF attachment, the code trying to set that link's action to open the attachment on page 3, and the resulting error message stack trace.",,,,,,,,,,,PDFBOX-4117,"03/Jul/22 09:50;giladd;EmbeddedActionTest-1.java;https://issues.apache.org/jira/secure/attachment/13046184/EmbeddedActionTest-1.java","03/Jul/22 09:48;giladd;LinkTest.pdf;https://issues.apache.org/jira/secure/attachment/13046185/LinkTest.pdf","03/Jul/22 12:06;giladd;LinkTest_Acrobat.pdf;https://issues.apache.org/jira/secure/attachment/13046189/LinkTest_Acrobat.pdf","03/Jul/22 12:06;giladd;LinkTest_edited.pdf;https://issues.apache.org/jira/secure/attachment/13046188/LinkTest_edited.pdf","03/Jul/22 09:48;giladd;StackTrace.txt;https://issues.apache.org/jira/secure/attachment/13046186/StackTrace.txt","03/Jul/22 15:30;giladd;image-2022-07-03-17-30-29-113.png;https://issues.apache.org/jira/secure/attachment/13046191/image-2022-07-03-17-30-29-113.png","03/Jul/22 15:31;giladd;image-2022-07-03-17-31-04-424.png;https://issues.apache.org/jira/secure/attachment/13046192/image-2022-07-03-17-31-04-424.png","03/Jul/22 15:12;tilman;screenshot-1.png;https://issues.apache.org/jira/secure/attachment/13046190/screenshot-1.png",,,,,,,,,,,8.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Jul 06 03:43:25 UTC 2022,,,,,,,,,,"0|z16k74:",9223372036854775807,,,,,,,,,,,,,,,,,,,"03/Jul/22 11:12;jira-bot;Commit 1902426 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1902426 ]
+
+PDFBOX-5470: fix check of GoToE destination, as suggested by Gilad Denneboom;;;","03/Jul/22 11:13;jira-bot;Commit 1902427 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902427 ]
+
+PDFBOX-5470: fix check of GoToE destination, as suggested by Gilad Denneboom;;;","03/Jul/22 11:46;tilman;Thanks, should work now, here's a snapshot
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/
+
+I tried your code and it works that there is no exception. I wasn't able to click and that the 2nd page was displayed, but I have some ""strong"" security settings on my Adobe Reader and I don't want to change them.;;;","03/Jul/22 12:07;giladd;Thanks a lot, Tilman! I updated the jar file in my project, and it's indeed not throwing an Exception any longer, but the link still doesn't work. I compared the A dictionary of a link created in Acrobat with that created using PDFBox (I used the PDF Debugger) and am not seeing any differences that would explain why this is happening.
+
+I attached the output created by the code, and the same file edited by Acrobat.  Any insight would be welcome!
+
+ 
+
+PS. I added the following line to the code, just in case:
+
+dest.setTop(0);;;;","03/Jul/22 12:38;tilman;The difference is that Adobe has encoded the name in UTF8 in the GoToE action and you didn't. You'd have to because the name is in UTF8 in the Names/EmbeddedFiles/Names array. We don't support this. If you really need the original string, you'd have to get the COSString object and then use this as a reference. (not sure if this will work at all);;;","03/Jul/22 13:10;tilman;It should work if you generate the EmbeddedFiles segment yourself.;;;","03/Jul/22 15:07;giladd;Strange... Where do you see that's it's UTF8 encoded? And do you mean that if I created the attachments using PDFBox, instead of doing it in Acrobat, it would work? Could I extract them from the PDF as separate files, reset the EmbeddedFiles array, and then re-attach them?;;;","03/Jul/22 15:12;giladd;I changed the setFilename line to:
+
+target.setFilename(new String(key.getBytes(), StandardCharsets.UTF_8));
+
+But the results are the same.;;;","03/Jul/22 15:12;tilman;I saw it with PDFDebugger; yes; yes. (But I didn't test it myself)
+ !screenshot-1.png! ;;;","03/Jul/22 15:13;tilman;Oops, it's not UTF8, it's unicode.;;;","03/Jul/22 15:23;tilman;""target"" isn't the one that needs to be changed, it's the names in EmbeddedFiles that is to be changed. I'll see if I can do something.;;;","03/Jul/22 15:24;giladd;Could it be the Zero Width No-Break Space (\uFEFF) character before the file-name, do you think?;;;","03/Jul/22 15:31;tilman;I added this line
+{code}
+doc.getDocumentCatalog().getNames().getEmbeddedFiles().setNames(names);
+{code}
+and now it works, although it shows page 4 instead of page 2.;;;","03/Jul/22 15:31;giladd;I added it manually and it converted the whole string to Unicode, but also inserted the space character twice, for some reason...
+
+ 
+
+Code: target.setFilename(""\uFEFF"" + key);
+
+Result:
+
+!image-2022-07-03-17-31-04-424.png!;;;","03/Jul/22 15:33;giladd;> and now it works, although it shows page 4 instead of page 2.
+
+That worked for me too! And yeah, it seems the page numbers start with -1, which is very odd. At least it works!;;;","03/Jul/22 20:27;giladd;PS. I tested it in another file and there the page numbers were 0-based, as expected.;;;","06/Jul/22 03:43;tilman;Setting this one to resolved. We should create a new issue about this page addressing problem if this can be reproduced reliably (I don't get a ""-1"") but it jumps to the wrong page.;;;"
+NullPointerException in CmapSubtable.getCharCode,PDFBOX-5465,13468579,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,AlbanL,AlbanL,27/Jun/22 12:07,29/Sep/22 17:57,07/May/23 20:06,31/Aug/22 03:05,2.0.25,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,0,,,"Hi,
+
+I got a NPE in the getCharCode method of CmapSubtable :
+{code:java}
+java.lang.NullPointerException: null
+ at org.apache.fontbox.ttf.CmapSubtable.getCharCode(CmapSubtable.java:669) ~[fontbox-2.0.25.jar!/:2.0.25]
+ at org.apache.fontbox.ttf.CmapSubtable.getCharCodes(CmapSubtable.java:686) ~[fontbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.pdmodel.font.PDType0Font.toUnicode(PDType0Font.java:528) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:811) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.showText(PDFStreamEngine.java:749) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.showTextString(PDFStreamEngine.java:608) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.operator.text.ShowText.process(ShowText.java:56) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:939) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:514) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:492) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.text.LegacyPDFStreamEngine.processPage(LegacyPDFStreamEngine.java:155) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.text.PDFTextStripper.processPage(PDFTextStripper.java:363) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.text.PDFTextStripper.processPages(PDFTextStripper.java:291) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.text.PDFTextStripper.writeText(PDFTextStripper.java:238) ~[pdfbox-2.0.25.jar!/:2.0.25]
+ at org.apache.pdfbox.text.PDFTextStripper.getText(PDFTextStripper.java:202) ~[pdfbox-2.0.25.jar!/:2.0.25]{code}
+ 
+
+-> It seems, in some cases the glyphIdToCharacterCode array is not instantiated.
+
+Sorry, but for privacy reason I can't share the PDF which cause this issue.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Tue Aug 30 09:30:28 UTC 2022,,,,,,,,,,"0|z16dxk:",9223372036854775807,,,,,,,,,,,,,,,,,,,"27/Jun/22 15:22;jira-bot;Commit 1902279 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902279 ]
+
+PDFBOX-5465: avoid NullPointerException;;;","27/Jun/22 15:22;jira-bot;Commit 1902280 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1902280 ]
+
+PDFBOX-5465: avoid NullPointerException;;;","27/Jun/22 17:18;tilman;Snapshot available here:
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;","30/Aug/22 09:30;lehmi;[~tilman] the change looks good to me. I guess it is ok to resolve the ticket;;;",,,,,,,,,,,,,
+White areas are rendered red when converting a pdf to png with pdfbox,PDFBOX-5464,13454520,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,wuyitingtz3,wuyitingtz3,21/Jun/22 09:51,22/Jun/22 03:49,07/May/23 20:06,,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,"hi
+
+This may be a problem similar to PDFBOX-4470 Red areas around text when converting a pdf to png with pdfbox - ASF JIRA (apache.org)
+
+When I convert a pdf to png files with pdfbox, I find that the backgroud White color was rendered as Red. And this is unusual, I have only one pdf rendered like this. But in this pdf, almost all pages are rendered as Red color.
+
+Here's some of the code that I'm using:
+{code:java}
+try (PDDocument document = PDDocument.load(new File(""example/"" + file + "".pdf""))) {
+    int numberOfPages = document.getNumberOfPages();
+    PDFRenderer renderer = new PDFRenderer(document);
+    for (int i = 0; i < numberOfPages; i++) {
+        System.out.println(""render "" + i);
+        BufferedImage bufferedImage = renderer.renderImage(i, 2, ImageType.RGB);
+        ImageIO.write(bufferedImage, ""png"", new File(""example/"" + file + ""-"" + i + "".png""));
+    }
+} {code}
+I also tried pdfbox 3.0.0-RC1, but result is the same.
+
+The red png files start at pdf page 3.",,,,,,,,,,,,"21/Jun/22 09:53;wuyitingtz3;err1-1.png;https://issues.apache.org/jira/secure/attachment/13045359/err1-1.png","21/Jun/22 09:53;wuyitingtz3;err1-2.png;https://issues.apache.org/jira/secure/attachment/13045358/err1-2.png","21/Jun/22 09:53;wuyitingtz3;err1-3.png;https://issues.apache.org/jira/secure/attachment/13045357/err1-3.png","21/Jun/22 09:53;wuyitingtz3;err1.pdf;https://issues.apache.org/jira/secure/attachment/13045360/err1.pdf",,,,,,,,,,,,,,,4.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Jun 22 03:49:19 UTC 2022,,,,,,,,,,"0|z13z60:",9223372036854775807,,,,,,,,,,,,,,,,,,,"21/Jun/22 17:33;tilman;I suspect that something is wrong in PDSeparation.toRGBImage(WritableRaster raster). The JPEG image itself is OK, it is a grey jpeg with a separation colorspace.
+The separation colorspace seems OK when displayed in PDFDebugger (blue). That separation colorspace has a an ICC colorspace as alternate colorspace, but that ICC colorspace is a LAB space.
+Some of the values returned by tintTransform() are negative, and/or larger than 255, which is unusual, and I don't know if these values are properly stored in ""altRaster"".
+
+I was able to get it to work by using toRGB(). But this is only a proof of concept, I don't know what's wrong.
+{code}
+    public BufferedImage toRGBImage(WritableRaster raster) throws IOException
+    {
+        if (alternateColorSpace instanceof PDLab)
+        {
+            // PDFBOX-3622 - regular converter fails for Lab colorspaces
+            return toRGBImage2(raster);
+        }
+        
+        int width = raster.getWidth();
+        int height = raster.getHeight();
+        float[] samples = new float[1];
+        
+        BufferedImage bim = new BufferedImage(raster.getWidth(), raster.getHeight(), BufferedImage.TYPE_INT_RGB);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                raster.getPixel(x, y, samples);
+                samples[0] /= 255.0;
+                float[] toRGB = toRGB(samples);
+                bim.setRGB(x, y, ((int) (toRGB[0] * 255)) << 16 | ((int) (toRGB[1] * 255)) << 8 | ((int) (toRGB[2] * 255)));
+            }
+        }
+        
+        return bim;
+    }
+{code}
+;;;","22/Jun/22 03:23;wuyitingtz3;Hi, emm honestly now I dont quite understand what you said, it's more difficult for me now. But as I said, this is a very special case. I'm not sure if this should be considered as a bug. Anyway, thanks a lot for testing this case, pdfbox helped me a lot.;;;","22/Jun/22 03:49;tilman;Sorry 😂
+
+It's for other developers / for myself.
+
+In short:
+- it's a bug
+- I know where it happens
+- I'm not sure why it happens
+- I failed to fix it;;;",,,,,,,,,,,,,,
+illegalArgumentException for rendering PDF (image extraction),PDFBOX-5463,13450962,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,RezaDer,RezaDer,20/Jun/22 10:36,29/Sep/22 17:57,07/May/23 20:06,22/Jun/22 03:47,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,Rendering,,,0,,,"This is an issue related to [#PDFBOX-2326] 
+
+I get the same fault with the attached PDF.
+{code:java}
+java.lang.IllegalArgumentException: Use PDType1CFont for FontFile3    at org.apache.pdfbox.pdmodel.font.PDType1Font.<init>(PDType1Font.java:223)
+    at org.apache.pdfbox.pdmodel.font.PDFontFactory.createFont(PDFontFactory.java:111)
+    at org.apache.pdfbox.pdmodel.PDResources.getFont(PDResources.java:143)
+    at org.apache.pdfbox.contentstream.operator.text.SetFontAndSize.process(SetFontAndSize.java:66)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:849)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:495)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:469)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.showForm(PDFStreamEngine.java:173)
+    at org.apache.pdfbox.rendering.PageDrawer.showForm(PageDrawer.java:1428)
+    at org.apache.pdfbox.contentstream.operator.graphics.DrawObject.process(DrawObject.java:86)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:849)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:495)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:469)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:142)
+    at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:264)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:338)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:259)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImageWithDPI(PDFRenderer.java:245){code}",,,,,,,,,,,,"20/Jun/22 10:30;RezaDer;fontIssues.pdf;https://issues.apache.org/jira/secure/attachment/13045309/fontIssues.pdf","21/Jun/22 08:02;RezaDer;test.zip;https://issues.apache.org/jira/secure/attachment/13045352/test.zip",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri Jun 24 17:14:07 UTC 2022,,,,,,,,,,"0|z13dzk:",9223372036854775807,,,,,,,,,,,,,,,,,,,"20/Jun/22 16:04;tilman;This was changed in PDFBOX-5339 to an IOException because of the wrong name. You're not using 2.0.26, please check your classpath contents, maybe do a clean build. ;;;","21/Jun/22 08:03;RezaDer;Thank you for the swift reply Tilman. 
+
+True, I am using: 3.0.0-RC1
+
+Tried with 2.0.26. Now, correctly I do not get the exception but the PDF is not rendered correctly. [^test.zip];;;","21/Jun/22 18:19;jira-bot;Commit 1902149 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1902149 ]
+
+PDFBOX-5463: show warning instead of throwing exception;;;","21/Jun/22 18:19;jira-bot;Commit 1902150 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902150 ]
+
+PDFBOX-5463: show warning instead of throwing exception;;;","21/Jun/22 19:04;tilman;Should work now, try a snapshot at
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;","24/Jun/22 09:53;RezaDer;It works [~tilman] !!! Thank you for the quick fix. (y)
+
+When is the 2.0.27 planned for release? 
+
+ ;;;","24/Jun/22 17:14;tilman;No fixed plans; we do releases every 3-4 months, the last release was in April.
+;;;",,,,,,,,,,
+Deadlock in TrueTypeFont and RAFDataStream,PDFBOX-5460,13450313,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,,Ram Lakshmanan,Ram Lakshmanan,15/Jun/22 22:29,29/Sep/22 17:57,07/May/23 20:06,06/Jul/22 17:18,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,0,deadlock,,"Deadlock is happening between *org.apache.fontbox.ttf.RAFDataStream* and *org.apache.fontbox.ttf.TrueTypeFont* objects. Below is the stack trace of the two threads which are in deadlock. If you want to see the complete thread dump you can [refer it here|https://fastthread.io/my-thread-report.jsp?p=c2hhcmVkLzIwMjIvMDYvMTUvLS1wZGYtYm94LWRlYWRsb2NrLnppcC0tMjItMjQtNTc=&s=t].
+
+ 
+{code:java}
+APP_Thread_50408_759_100162222_WorkerTask_1652842343227_P_Th_SPR-APP-pool-5-thread-6
+PRIORITY : 5
+THREAD ID : 0X00007F894C406000
+NATIVE ID : 0X44D1
+NATIVE ID (DECIMAL) : 17617
+STATE : BLOCKED
+stackTrace:
+java.lang.Thread.State: BLOCKED (on object monitor)
+at org.apache.fontbox.ttf.TrueTypeFont.getTable(TrueTypeFont.java:147)
+- waiting to lock <0x00000002d216fec8> (a org.apache.fontbox.ttf.TrueTypeFont)
+at org.apache.fontbox.ttf.TrueTypeFont.getHorizontalMetrics(TrueTypeFont.java:229)
+at org.apache.fontbox.ttf.GlyphTable.getGlyphData(GlyphTable.java:210)
+at org.apache.fontbox.ttf.GlyphTable.getGlyph(GlyphTable.java:191)
+- locked <0x00000002d218ca28> (a org.apache.fontbox.ttf.RAFDataStream)
+at org.apache.fontbox.ttf.TrueTypeFont.getPath(TrueTypeFont.java:676)
+at org.apache.pdfbox.pdmodel.font.PDType1Font.getPath(PDType1Font.java:638)
+at org.apache.pdfbox.rendering.Type1Glyph2D.getPathForCharacterCode(Type1Glyph2D.java:83)
+at org.apache.pdfbox.rendering.PageDrawer.drawGlyph2D(PageDrawer.java:495)
+at org.apache.pdfbox.rendering.PageDrawer.showFontGlyph(PageDrawer.java:476)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:787)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:805)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showText(PDFStreamEngine.java:743)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showTextString(PDFStreamEngine.java:606)
+at org.apache.pdfbox.contentstream.operator.text.ShowText.process(ShowText.java:56)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:933)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:514)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:492)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:277)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:347)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:268)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:228)
+at xxxxxxx.export.service.thumbnail.PDFSlideGeneratorServiceImpl$1.call(PDFSlideGeneratorServiceImpl.java:60)
+at xxxxxxx.ops.executor.util.ParallelExecutorTask.doCall(ParallelExecutorTask.java:43)
+at xxxxxxx.ops.executor.util.ParallelExecutor.executeTaskFromQueue(ParallelExecutor.java:154)
+at xxxxxxx.ops.executor.util.ParallelExecutor.access$100(ParallelExecutor.java:26)
+at xxxxxxx.ops.executor.util.ParallelExecutor$WorkerTask.doCall(ParallelExecutor.java:164)
+at xxxxxxx.ops.executor.util.UserContextAwareCallable.call(UserContextAwareCallable.java:89)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+at java.lang.Thread.run(Thread.java:748)
+
+
+
+APP_Thread_50408_759_100162222_WorkerTask_1652842343227_P_Th_SPR-APP-pool-5-thread-5
+PRIORITY : 5
+THREAD ID : 0X00007F894C404800
+NATIVE ID : 0X44D0
+NATIVE ID (DECIMAL) : 17616
+STATE : BLOCKED
+stackTrace:
+java.lang.Thread.State: BLOCKED (on object monitor)
+at org.apache.fontbox.ttf.TrueTypeFont.readTable(TrueTypeFont.java:356)
+- waiting to lock <0x00000002d218ca28> (a org.apache.fontbox.ttf.RAFDataStream)
+at org.apache.fontbox.ttf.TrueTypeFont.getTable(TrueTypeFont.java:150)
+- locked <0x00000002d216fec8> (a org.apache.fontbox.ttf.TrueTypeFont)
+at org.apache.fontbox.ttf.TrueTypeFont.getCmap(TrueTypeFont.java:262)
+at org.apache.fontbox.ttf.TrueTypeFont.getUnicodeCmapImpl(TrueTypeFont.java:556)
+at org.apache.fontbox.ttf.TrueTypeFont.getUnicodeCmapLookup(TrueTypeFont.java:541)
+at org.apache.fontbox.ttf.TrueTypeFont.nameToGID(TrueTypeFont.java:629)
+at org.apache.fontbox.ttf.TrueTypeFont.hasGlyph(TrueTypeFont.java:698)
+at org.apache.pdfbox.pdmodel.font.PDType1Font.getNameInFont(PDType1Font.java:601)
+at org.apache.pdfbox.pdmodel.font.PDType1Font.hasGlyph(PDType1Font.java:645)
+at org.apache.pdfbox.rendering.Type1Glyph2D.getPathForCharacterCode(Type1Glyph2D.java:59)
+at org.apache.pdfbox.rendering.PageDrawer.drawGlyph2D(PageDrawer.java:495)
+at org.apache.pdfbox.rendering.PageDrawer.showFontGlyph(PageDrawer.java:476)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:787)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:805)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showText(PDFStreamEngine.java:743)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.showTextString(PDFStreamEngine.java:606)
+at org.apache.pdfbox.contentstream.operator.text.ShowText.process(ShowText.java:56)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:933)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:514)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:492)
+at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:277)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:347)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:268)
+at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:228)
+at xxxxxxx.export.service.thumbnail.PDFSlideGeneratorServiceImpl$1.call(PDFSlideGeneratorServiceImpl.java:60)
+at xxxxxxx.ops.executor.util.ParallelExecutorTask.doCall(ParallelExecutorTask.java:43)
+at xxxxxxx.ops.executor.util.ParallelExecutor.executeTaskFromQueue(ParallelExecutor.java:154)
+at xxxxxxx.ops.executor.util.ParallelExecutor.access$100(ParallelExecutor.java:26)
+at xxxxxxx.ops.executor.util.ParallelExecutor$WorkerTask.doCall(ParallelExecutor.java:164)
+at xxxxxxx.ops.executor.util.UserContextAwareCallable.call(UserContextAwareCallable.java:89)
+at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+at java.lang.Thread.run(Thread.java:748) {code}
+ 
+
+ ",,,,,,,,,,,PDFBOX-4219,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Jul 06 17:18:27 UTC 2022,,,,,,,,,,"0|z13a00:",9223372036854775807,,,,,,,,,,,,,,,,,,,"16/Jun/22 03:30;tilman;Thanks for the detailed trace. Ouch.
+
+From what I understand, {{getGlyph()}} is the bad actor here when it's calling {{getGlyphData()}} which loads the hmtx table. The data object is used for synchronization in two different classes, obscuring all this further. A solution would be to get the hmtx table first, before ""data"" is getting locked. I.e. FIRST the truetype font object, THEN then the data object, never the other way around.;;;","16/Jun/22 10:39;lehmi;[~Ram Lakshmanan] Just out of curiosity: what exactly are you doing? Rendering one PDDocument using multiple threads? I guess deadlocks like the described one may only happen if the ttf is loaded in on demand mode which indicates that a font substitution is done. I'd like to proof my theory by looking at a sample pdf, is there any chance to get one?;;;","16/Jun/22 16:17;jira-bot;Commit 1901983 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1901983 ]
+
+PDFBOX-5460: avoid deadlock;;;","16/Jun/22 16:17;jira-bot;Commit 1901984 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1901984 ]
+
+PDFBOX-5460: avoid deadlock;;;","04/Jul/22 06:13;lehmi;How about removing the whole on demand feature for TTFs? It is used within the font cache only and is one of two reasons to keep the underlying file open, something I'd like to eliminate as well due to the finalize issue, see PDFBOX-5362.;;;","04/Jul/22 06:33;tilman;Why did we introduce it in the first place? Without looking at the history, I guess it was either to lessen the memory footprint, or to increase speed when loading fonts with many glyphs (e.g. ArialUni or CJK fonts).;;;","04/Jul/22 06:52;msahyoun;The other option would be to do an initial parse and close/reopen on demand;;;","05/Jul/22 06:18;lehmi;{quote}Why did we introduce it in the first place?{quote}
+The initial version was introduced in PDFBOX-1689. It looks like it took several minutes to load external fonts containing lots of glyphs. According to [~tilman]  comment it took several minutes to load all fonts.
+
+The observation was correct and still is. Parsinf all glyphs of such fonts is still an issue. But good news is, there is some special on demand load mechanism for glyphs in place which shouldn't be removed at all. My idea removes the on demand feature for the TTFTables only which doesn't include reading the single glyphs. I ran some simple tests. The on demand loading is approx. 2 times faster. This sounds a lot but this is done only once for building the cache and on my system we are talking about 1.5sec vs. 3sec it doesn't took minutes as in the past. IMHO that is something we can live with.
+
+I had a quick look at the memory consumption and couldn't find any significant difference.
+
+{quote}The other option would be to do an initial parse and close/reopen on demand{quote}
+Sounds like a reasonable option, especially if we are thinking about closing the font instead of keeping it open forever to remove the finalize stuff. It should be easy to add some switch to limit the init process to the mandatory tables which are needed for the font cache calculations.
+
+I'm in favour of simplifying things as long as there aren't any obvious reasons not to do so. If there are any issues in the long we might find a solution, maybe a better one as the old one we'd removed ;-)
+
+;;;","05/Jul/22 17:15;tilman;OK I get it, you mean the non glyf tables. I don't mind that the cache building takes a little longer. The next question would be what performance loss do we have when rendering a PDF file with texts / doing a text extraction on it because of reading tables that we don't need.;;;","06/Jul/22 05:54;lehmi;I don't expect significant changes when rendering a pdf or extracting the text as embedded fonts don't use the on demand TTF-parser. The usage is limited to fonts which are substituted (Standard14-fonts, missing/broken embedded fonts) and in such cases the FontCache comes into play.
+
+You may want to try it yourself. Just remove the second parameter when creating the TTFParser/OTFParser in {{org.apache.pdfbox.pdmodel.font.FileSystemFontProvider}}. There are 4 occurencies;;;","06/Jul/22 15:55;tilman;Indeed, thank you, I completely forgot that this ""on demand"" is optional, because of all the debugging here. Now I did what you suggested and the difference is only between 100ms and 900ms (best total time in current code is 3000ms). So yeah, lets do that you suggested.;;;","06/Jul/22 17:04;jira-bot;Commit 1902509 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902509 ]
+
+PDFBOX-5460: deactivate ondemand TTF-parser;;;","06/Jul/22 17:05;jira-bot;Commit 1902510 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1902510 ]
+
+PDFBOX-5460: removed ondemand TTF-parser;;;","06/Jul/22 17:15;lehmi;[~tilman] Thanks for double checking!
+
+I've removed the ondemand TTF-parser, which should it make less likely that a(nother) dead lock appears. Tilmans changes already fix the origin issue. I'd like to do some more refactoring but I'm going to open another ticket for that. For new I'm done here.;;;","06/Jul/22 17:18;tilman;Thank you [~lehmi] !;;;",,
+NullPointerException in PDFunctionType3.eval(),PDFBOX-5459,13450129,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,tilman,tilman,15/Jun/22 04:00,15/Sep/22 17:21,07/May/23 20:06,15/Jun/22 04:03,1.8.16,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,1.8.17,2.0.27,3.0.0 PDFBox,Rendering,,,0,,,"As reported by [~CasaDelGato]
+{noformat}
+java.lang.NullPointerException: null
+    at org.apache.pdfbox.pdmodel.common.function.PDFunctionType3.eval(PDFunctionType3.java:123) ~[pdfbox.jar:?]
+    at org.apache.pdfbox.pdmodel.graphics.shading.PDShading.evalFunction(PDShading.java:410) ~[pdfbox.jar:?]
+    at org.apache.pdfbox.pdmodel.graphics.shading.PDShading.evalFunction(PDShading.java:393) ~[pdfbox.jar:?]
+    at org.apache.pdfbox.pdmodel.graphics.shading.AxialShadingContext.calcColorTable(AxialShadingContext.java:151) ~[pdfbox.jar:?]
+{noformat}
+
+",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Jun 15 17:15:01 UTC 2022,,,,,,,,,,"0|z138v4:",9223372036854775807,,,,,,,,,,,,,,,,,,,"15/Jun/22 04:02;jira-bot;Commit 1901925 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1901925 ]
+
+PDFBOX-5459: move null check to correct position;;;","15/Jun/22 04:02;jira-bot;Commit 1901926 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1901926 ]
+
+PDFBOX-5459: move null check to correct position;;;","15/Jun/22 17:15;jira-bot;Commit 1901947 from Tilman Hausherr in branch 'pdfbox/branches/1.8'
+[ https://svn.apache.org/r1901947 ]
+
+PDFBOX-5459: move null check to correct position;;;",,,,,,,,,,,,,,
+ClassCastException (PDColor.java:66),PDFBOX-5453,13448801,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,John Petersam,John Petersam,07/Jun/22 13:35,29/Sep/22 17:57,07/May/23 20:06,07/Jun/22 19:06,2.0.24,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,PDModel,,,0,,,"We are currently running PDFBox 2.0.24 & 2.0.26, but I see the code is identical in the trunk.
+
+Certain PDFs are throwing the exception shown below in our production system.  In these cases,  rather than the array containing a list of COSNumbers, it actually contains a single item - another COSArray.
+
+That COSArray then has an array of COSNumbers.  If I insert the following lines of code at line 62 to use the inner COSArray, the PDF renders properly.
+
+{{            *if ((array.size() == 1) && (array.get(0) instanceof COSArray))*}}
+{{                *array = (COSArray) array.get(0);*}}
+
+ 
+
+Unfortunately, we do not generate the PDFs ourselves and our documents contain sensitive information so I am unable to provide an example.
+
+ 
+
+*Exception:*
+
+{{java.lang.ClassCastException: class org.apache.pdfbox.cos.COSArray cannot be cast to class org.apache.pdfbox.cos.COSNumber (org.apache.pdfbox.cos.COSArray and org.apache.pdfbox.cos.COSNumber are in unnamed module of loader 'app')}}
+{{at org.apache.pdfbox.pdmodel.graphics.color.PDColor.(PDColor.java:66)}}
+{{at org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDFreeTextAppearanceHandler.extractNonStrokingColor(PDFreeTextAppearanceHandler.java:424)}}
+{{at org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDFreeTextAppearanceHandler.generateNormalAppearance(PDFreeTextAppearanceHandler.java:111)}}
+{{at org.apache.pdfbox.pdmodel.interactive.annotation.handlers.PDFreeTextAppearanceHandler.generateAppearanceStreams(PDFreeTextAppearanceHandler.java:75)}}
+{{at org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationMarkup.constructAppearances(PDAnnotationMarkup.java:897)}}
+{{at org.apache.pdfbox.rendering.PageDrawer.showAnnotation(PageDrawer.java:1521)}}
+{{at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:281)}}
+{{at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:347)}}
+{{at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:268)}}",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Tue Jun 07 19:06:20 UTC 2022,,,,,,,,,,"0|z130ps:",9223372036854775807,,,,,,,,,,,,,,,,,,,"07/Jun/22 15:51;jira-bot;Commit 1901730 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1901730 ]
+
+PDFBOX-5453: avoid ClassCastException;;;","07/Jun/22 15:51;jira-bot;Commit 1901731 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1901731 ]
+
+PDFBOX-5453: avoid ClassCastException;;;","07/Jun/22 16:01;tilman;I don't want to support something that is clearly wrong, but a ClassCastException is also a no-no. I've fixed that, please try rendering your PDF again. The result is likely that some color will be black.
+
+Snapshot build here:
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;","07/Jun/22 16:34;John Petersam;Hi Tilman,
+Thanks for making quick work of this.  I can confirm that it is resolved.
+
+Thanks again!;;;","07/Jun/22 19:06;tilman;Thanks for the feedback!;;;",,,,,,,,,,,,
+Rending with the incorrect color,PDFBOX-5442,13446530,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,,,kalaspuffar,kalaspuffar,24/May/22 08:25,24/May/22 16:14,07/May/23 20:06,,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,"Hi Team.
+
+ 
+
+We have noticed that PDFBox sometimes renders with brighter colors than other renderers and it doesn't matter that much on photos but when a PDF is split into multiple smaller images and all images aren't rendered with the same hue you will have a strangely looking image.
+
+ 
+
+To reproduce: Open PDF in Debugger or render an image with PDFToImage.",,,,,,,,,,,PDFBOX-5051,"24/May/22 08:24;kalaspuffar;23115_133_1_25693_17.pdf;https://issues.apache.org/jira/secure/attachment/13044117/23115_133_1_25693_17.pdf","24/May/22 08:24;kalaspuffar;23115_133_1_25693_171.png;https://issues.apache.org/jira/secure/attachment/13044118/23115_133_1_25693_171.png",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Tue May 24 16:12:22 UTC 2022,,,,,,,,,,"0|z12mrs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"24/May/22 16:12;tilman;These color differences are mainly related to PDFBOX-5051 and [JDK-6968788|https://bugs.openjdk.java.net/browse/JDK-6968788]. If we replace {{colorConvertOp.filter()}} in {{PDColorSpace.toRGBImageAWT()}} with
+{code:java}
+   for (int x = 0; x < src.getWidth(); ++x)
+		for (int y = 0; y < src.getHeight(); ++y)
+			dest.setRGB(x, y, src.getRGB(x, y));
+{code}
+then it looks much better.
+
+Other slight differences are because we don't use the ""U.S. Web Coated (SWOP) v2"" profile for CMYK. You could try to add this at the beginning of your code:
+{code:java}
+PDDeviceCMYK.INSTANCE = new PDDeviceCMYK()
+{
+	@Override
+	protected ICC_Profile getICCProfile() throws IOException
+	{
+		try (InputStream is = new FileInputStream(""...../U.S. Web Coated (SWOP) v2.icm""))
+		{
+			return ICC_Profile.getInstance(is);
+		}
+	}
+};
+{code};;;",,,,,,,,,,,,,,,,
+COSStream has been closed Exception on saving PDF document,PDFBOX-5437,13445648,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,sanjivaninikam,sanjivaninikam,18/May/22 13:48,18/May/22 18:35,07/May/23 20:06,,2.0.24,2.0.25,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,PDModel,,,0,,,"Below exception occurs on saving created pdf,
+
+java.io.IOException: COSStream has been closed and cannot be read. Perhaps its enclosing PDDocument has been closed?
+    at org.apache.pdfbox.cos.COSStream.checkClosed(COSStream.java:83) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.cos.COSStream.createRawInputStream(COSStream.java:133) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.visitFromStream(COSWriter.java:1268) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.cos.COSStream.accept(COSStream.java:416) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.doWriteObject(COSWriter.java:570) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.doWriteObjects(COSWriter.java:496) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.doWriteBody(COSWriter.java:480) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.visitFromDocument(COSWriter.java:1162) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.cos.COSDocument.accept(COSDocument.java:452) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.write(COSWriter.java:1435) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdfwriter.COSWriter.write(COSWriter.java:1322) ~[pdfbox-2.0.26.jar:2.0.26]
+    at org.apache.pdfbox.pdmodel.PDDocument.save(PDDocument.java:1377) ~[pdfbox-2.0.26.jar:2.0.26]",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed May 18 18:35:05 UTC 2022,,,,,,,,,,"0|z12hbs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"18/May/22 14:26;mkl;This sounds like you work with two documents at a time, say A and B, add an object of document A to document B, close A (explicitly or via garbage collection), and then save B.
+
+This cannot work.
+
+You should _clone_ the object from A and only add the clone to B, or you should keep document A open and referenced until after you save B.
+
+The PDFBox {{PDFCloneUtility}} gives you a hint how cloning is done.;;;","18/May/22 18:35;tilman;The clone class will no longer be available in 3.*, it was too ""dangerous"" 😂 (but it can be copied). In most cases changing the sequence of closing (like you suggested) solves these problems.;;;",,,,,,,,,,,,,,,
+PDFStreamEngine.showTextStrings with font switch,PDFBOX-5430,13443658,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,Schmidor,Schmidor,06/May/22 14:46,29/Sep/22 17:57,07/May/23 20:06,07/May/22 13:13,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,Parsing,,,0,,,"The attached PDF fails to render with an PDFStreamEngine.showTextStrings with the following exception:
+""java.io.IOException: Unknown type COSName in array for TJ operation:COSName\{F3}""
+
+This seems to be a font switch.
+{code:java}
+diff --git ""a/pdfbox/src/main/java/org/apache/pdfbox/contentstream/PDFStreamEngine.java"" ""b/pdfbox/src/main/java/org/apache/pdfbox/contentstream/PDFStreamEngine.java""
+index e4f2259a5..12edadd2b 100644
+--- ""a/pdfbox/src/main/java/org/apache/pdfbox/contentstream/PDFStreamEngine.java""
++++ ""b/pdfbox/src/main/java/org/apache/pdfbox/contentstream/PDFStreamEngine.java""
+@@ -680,6 +680,18 @@ public abstract class PDFStreamEngine
+                 byte[] string = ((COSString)obj).getBytes();
+                 showText(string);
+             }
++            else if (obj instanceof COSName)
++            {
++                if(((COSName) obj).getName().startsWith(""F""))
++                {
++                    textState.setFont(resources.getFont((COSName) obj));
++                }
++                else
++                {
++                    throw new IOException(""Unknown type "" + obj.getClass().getSimpleName()
++                            + "" in array for TJ operation:"" + obj);
++                }
++            }
+             else if (obj instanceof COSArray)
+             {
+                 LOG.error(""Nested arrays are not allowed in an array for TJ operation:"" + obj);
+{code}",,,,,,,,,,,,"06/May/22 14:39;Schmidor;keine Vorschau ELO-1228188_20220228_11462_HD_online.pdf;https://issues.apache.org/jira/secure/attachment/13043335/keine+Vorschau+ELO-1228188_20220228_11462_HD_online.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Mon May 09 17:27:45 UTC 2022,,,,,,,,,,"0|z1254w:",9223372036854775807,,,,,,,,,,,,,,,,,,,"06/May/22 15:38;lehmi;I guess you are referring to things like this
+{code}
+ [ /F3 8 (Monatliche Kosten  ) /F1 8 0 -11 ] TJ
+{code}
+Maybe I'm missing something, but the TJ operator doesn't define a font switch. It is simply malformed.
+
+;;;","06/May/22 15:57;Schmidor;I can't say how the internal structure should be.
+
+But from testing, just ignoring the COSName objects lets me render the PDF, but with some texts in a normal weight font instead of a bold font as in Acrobat.
+
+Using the COSName for setting a font, it is displayed as in Actobat.;;;","06/May/22 16:06;tilman;Your patch suggestion is a workaround for that file only. A better solution would be to log the error instead of throwing an exception. But this is really a terrible file.;;;","06/May/22 16:37;Schmidor;Just logging istead of throwing would at least help to display the file.;;;","07/May/22 03:58;jira-bot;Commit 1900638 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900638 ]
+
+PDFBOX-5430: don't throw, log error instead so that file can be rendered;;;","07/May/22 03:58;jira-bot;Commit 1900639 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1900639 ]
+
+PDFBOX-5430: don't throw, log error instead so that file can be rendered;;;","07/May/22 05:49;jira-bot;Commit 1900641 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900641 ]
+
+PDFBOX-5430: remove typo;;;","07/May/22 08:44;lehmi;{quote}
+Using the COSName for setting a font, it is displayed as in Actobat.
+{quote}
+Sounds like a ""hidden feature"". It is not in the spec but maybe in some addendum? BTW, looks like the pdf was created using Adobe Illustrator;;;","07/May/22 12:42;tilman;Yes but this is weird - this is an invoice. Why would anybody do this with Adobe Illustrator?
+My guess is that the invoice template was created with AI, and then the invoice data was added by some buggy billing software.
+This is the raw 4th content stream (formatting like this in the original):
+{noformat}
+BT
+64 477 Td
+[/F3 8 Tf
+(Monatliche Kosten  ) Tj
+/F1 8 Tf
+0 -11 Td
+] TJ
+ET
+{noformat}
+the correct content stream would have been
+{noformat}
+BT
+64 477 Td
+/F3 8 Tf
+(Monatliche Kosten  ) Tj
+/F1 8 Tf
+0 -11 Td
+ET
+{noformat}
+;;;","07/May/22 13:13;tilman;[~Schmidor] If possible, tell your client (likely P. M. GmbH) to contact their vendor (N. GmbH) to send this issue to the company that does their billing software.;;;","08/May/22 12:18;mkl;Indeed, this content stream simply is broken. As [~tilman] has shown, a number of instructions therein have - incorrectly! - been made the contents of the array argument of a *TJ* instruction.
+
+Adobe Acrobat apparently ignores that the instructions are so enclosed and acts as if there was no *\[* or *\] TJ*.
+
+Other viewers might simply ignore (or treat as strings) everything that is neither string nor number in the array.
+
+In case of content that matters (as invoice content does), this might lead completely different appearances if viewed with different viewers. Thus, PDFBox should definitively throw an exception here and not repair it one way or the other.;;;","09/May/22 17:27;tilman;Yeah we should refuse all these weird files, but the problem is that users always have the winning argument ""but it renders on Adobe Reader!"".;;;",,,,,
+PDFCloneUtility.checkForRecursion breaks support for some existing PDFs,PDFBOX-5429,13443653,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,Fixed,tilman,sz5000,sz5000,06/May/22 14:31,29/Sep/22 17:57,07/May/23 20:06,14/Sep/22 18:07,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,Utilities,,,0,,,This new PDFCloneUtility.checkForRecursion function breaks support for a lot of existing PDFs. I've seen a lot of documents where the /Prev and /Next entries point to the parent element. So this breaks support for a lot of existing PDFs which could be processed before. I would suggest to remove these new check.,,,,,,,,,,,PDFBOX-5372,"12/May/22 14:18;sz5000;testpdf_stripped.pdf;https://issues.apache.org/jira/secure/attachment/13043578/testpdf_stripped.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Fri May 13 17:08:39 UTC 2022,,,,,,,,,,"0|z1253s:",9223372036854775807,,,,,,,,,,,,,,,,,,,"06/May/22 15:38;lehmi;Please attach a sample pdf;;;","12/May/22 14:27;sz5000;Hi, I've attached a sample pdf file which I have stripped tp remove sensitive data. When you try to merge this PDF with another one, then you will get an error like {*}Loop within object COSObject\{101, 0}{*}. This worked with prior versions of pdfbox, but the checkForRecursion  function breaks this support.
+
+This test pdf was provided to us and was created by another tool. This PDF can be read by any reader. Maybe the PDF is not built correctly, but with the current version of PDFbox you can not process this PDF, which is the worst condition. Then better remove checkForRecursion so that you can process it.
+
+The problem here, in my opinion, is not the PDFs created with PDFBox, but the PDFs created by the many other programs that do not always have the best PDF export.;;;","13/May/22 06:11;tilman;{code}
+101 0 obj
+<< /Dest [ 8 0 R /XYZ 72 119.3703 null ] /Next 121 0 R /Parent 3 0 R /Prev 101 0 R /Title <feff0065006e0067006100670069006500720074002c00200062006500670065006900730074006500720075006e00670073006600e4006800690067002c0020006b006f006d006d0075006e0069006b0061007400690076> >>
+endobj
+{code}
+;;;","13/May/22 16:22;jira-bot;Commit 1900861 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1900861 ]
+
+PDFBOX-5429: don't abort when there is a self-reference, keep it;;;","13/May/22 16:22;jira-bot;Commit 1900862 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900862 ]
+
+PDFBOX-5429: don't abort when there is a self-reference, keep it;;;","13/May/22 17:08;tilman;The new solution doesn't throw an exception, instead it keeps the self-reference in the destination.
+
+Snapshot available here:
+
+[https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/]
+
+[~nunop5] please test it too;;;",,,,,,,,,,,
+PDFRenderer.renderImageWithDPI thows EOFException in PDF,PDFBOX-5428,13443007,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,tilman,patrick_kochan,patrick_kochan,03/May/22 17:33,29/Sep/22 17:57,07/May/23 20:06,04/May/22 16:21,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,Rendering,,0,,," 
+
+I use the PDFRenderer in my application and noticed that the renderImageWithDPI method throws an EOFException with certain PDF files like the one in the attachment.
+
+ 
+
+ 
+
+My code:
+
+ 
+{code:java}
+private void pdfToImage(final Path pdfFile, final Path destImageFile)
+        throws IOException, UnrecoverableConversionErrorException {
+        try (final PDDocument document = PDDocument.load(pdfFile.toFile(), MemoryUsageSetting.setupTempFileOnly())) {
+            disableImageCache(document);
+            final PDFRenderer pdfRenderer = new PDFRenderer(document);
+            final BufferedImage bim = pdfRenderer.renderImageWithDPI(0, 300, ImageType.RGB);
+            ImageIOUtil.writeImage(bim, destImageFile.toAbsolutePath().toString(), 300);
+        } catch (final RasterFormatException | NegativeArraySizeException e) {
+            throw new UnrecoverableConversionErrorException(e);
+        }
+} {code}
+ 
+
+ 
+
+Exception thrown:
+
+ 
+{code:java}
+java.io.EOFException
+    at org.apache.fontbox.ttf.MemoryTTFDataStream.readUnsignedShort(MemoryTTFDataStream.java:120)
+    at org.apache.fontbox.ttf.TTFDataStream.readUnsignedShortArray(TTFDataStream.java:192)
+    at org.apache.fontbox.ttf.GlyfSimpleDescript.<init>(GlyfSimpleDescript.java:78)
+    at org.apache.fontbox.ttf.GlyphData.initData(GlyphData.java:60)
+    at org.apache.fontbox.ttf.GlyphTable.getGlyphData(GlyphTable.java:212)
+    at org.apache.fontbox.ttf.GlyphTable.getGlyph(GlyphTable.java:191)
+    at org.apache.pdfbox.pdmodel.font.PDCIDFontType2.getPath(PDCIDFontType2.java:421)
+    at org.apache.pdfbox.pdmodel.font.PDType0Font.getPath(PDType0Font.java:625)
+    at org.apache.pdfbox.rendering.TTFGlyph2D.getPathForGID(TTFGlyph2D.java:144)
+    at org.apache.pdfbox.rendering.TTFGlyph2D.getPathForCharacterCode(TTFGlyph2D.java:93)
+    at org.apache.pdfbox.rendering.PageDrawer.drawGlyph2D(PageDrawer.java:511)
+    at org.apache.pdfbox.rendering.PageDrawer.showFontGlyph(PageDrawer.java:492)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:820)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.showGlyph(PDFStreamEngine.java:838)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.showText(PDFStreamEngine.java:776)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.showTextString(PDFStreamEngine.java:635)
+    at org.apache.pdfbox.contentstream.operator.text.ShowText.process(ShowText.java:56)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processOperator(PDFStreamEngine.java:966)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:541)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:516)
+    at org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+    at org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:279)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:355)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:272)
+    at org.apache.pdfbox.rendering.PDFRenderer.renderImageWithDPI(PDFRenderer.java:258)
+    at com.converter.PdfConverter.pdfToImage(PdfConverter.java:41){code}
+ ","Ubuntu 20.04.4 LTS
+Java OpenJDK 11.0.12-open",,,,,,,,,,,"03/May/22 18:55;tilman;WIIKTA+FujiyamaPSMT.ttf;https://issues.apache.org/jira/secure/attachment/13043205/WIIKTA%2BFujiyamaPSMT.ttf","03/May/22 18:57;tilman;image-2022-05-03-20-57-47-063.png;https://issues.apache.org/jira/secure/attachment/13043207/image-2022-05-03-20-57-47-063.png","03/May/22 17:11;patrick_kochan;pdf_convert_10.pdf;https://issues.apache.org/jira/secure/attachment/13043204/pdf_convert_10.pdf",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed May 04 17:13:01 UTC 2022,,,,,,,,,,"0|z12154:",9223372036854775807,,,,,,,,,,,,,,,,,,,"03/May/22 18:57;tilman;With the trunk I also get ""Glyph rendering failed for code 27 in font WIIKTA+FujiyamaPSMT"". I extracted the font [^WIIKTA+FujiyamaPSMT.ttf] and opened it with DTL OTMaster 3.7 light and got this
+ !image-2022-05-03-20-57-47-063.png!
+Surprise, it can't load glyph 27.;;;","03/May/22 19:08;tilman;Ouch, now I see that in 2.0.26, the page isn't rendered at all. With the trunk the page is rendered (i.e. PDFBox recovers from the exception), but I don't see what is missing.;;;","04/May/22 03:01;jira-bot;Commit 1900533 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1900533 ]
+
+PDFBOX-5428: report position if we can't get the glyph bounds for the cyan rectangles;;;","04/May/22 06:48;jira-bot;Commit 1900540 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900540 ]
+
+PDFBOX-5428: catch exception and report position if we can't draw the glyph;;;","04/May/22 16:21;tilman;Should work now, thanks for reporting this. I also fixed a bug in PDFDebugger in the trunk (not in 2.0 because that one doesn't have the ""font rectangles"" features). The missing font is in the right column, next to the ""E mais"" and ""Contudo"" subtitles.
+You can test with a snapshot at
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/2.0.27-SNAPSHOT/;;;","04/May/22 17:13;patrick_kochan;[~tilman] I would like to thank you for your attention and quick resolution of the case. I tested the snapshot and it's resolved. Thank you for the good work!;;;",,,,,,,,,,,
+PDFDebugger does not remove listeners for PagePane when opening new File,PDFBOX-5427,13442909,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,Fixed,tilman,moritzf,moritzf,03/May/22 06:28,29/Sep/22 17:57,07/May/23 20:06,03/May/22 16:10,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,,,Utilities,,,0,,,"A PagePane reacts to changes made to the ""Repair AcroForm"" setting.
+
+However this only works without errors for the first document opened in an instance of the PDFDebugger. 
+For any further document opened, an error is produced when changing the setting while the second document is opened. The listeners probably need to be removed when loading a new document (or when closing switching/away from the PagePane).
+
+
+{code:java}
+java.lang.RuntimeException: java.util.concurrent.ExecutionException: java.io.IOException: COSStream has been closed and cannot be read. Perhaps its enclosing PDDocument has been closed?
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.done(PagePane.java:485)
+    java.desktop/sun.swing.AccumulativeRunnable.run(AccumulativeRunnable.java:112)
+    java.base/java.security.AccessController.doPrivileged(Native Method)
+    java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+Caused by: java.util.concurrent.ExecutionException: java.io.IOException: COSStream has been closed and cannot be read. Perhaps its enclosing PDDocument has been closed?
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.done(PagePane.java:465)
+    java.desktop/sun.swing.AccumulativeRunnable.run(AccumulativeRunnable.java:112)
+    java.base/java.security.AccessController.doPrivileged(Native Method)
+    java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:85)
+Caused by: java.io.IOException: COSStream has been closed and cannot be read. Perhaps its enclosing PDDocument has been closed?
+    org.apache.pdfbox.cos.COSStream.checkClosed(COSStream.java:83)
+    org.apache.pdfbox.cos.COSStream.createInputStream(COSStream.java:168)
+    org.apache.pdfbox.cos.COSStream.createInputStream(COSStream.java:163)
+    org.apache.pdfbox.pdmodel.PDPage.getContents(PDPage.java:157)
+    org.apache.pdfbox.pdfparser.PDFStreamParser.<init>(PDFStreamParser.java:91)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processStreamOperators(PDFStreamEngine.java:535)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processStream(PDFStreamEngine.java:516)
+    org.apache.pdfbox.contentstream.PDFStreamEngine.processPage(PDFStreamEngine.java:155)
+    org.apache.pdfbox.rendering.PageDrawer.drawPage(PageDrawer.java:279)
+    org.apache.pdfbox.rendering.PDFRenderer.renderImage(PDFRenderer.java:355)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:453)
+    org.apache.pdfbox.debugger.pagepane.PagePane$RenderWorker.doInBackground(PagePane.java:435)
+    java.base/java.lang.Thread.run(Thread.java:829) {code}",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Tue May 03 16:10:05 UTC 2022,,,,,,,,,,"0|z120jc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"03/May/22 07:05;tilman;Please add the version(s). I remember having made some changes re: listeners.
+
+Also test with the 3.0 version
+https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/debugger-app/3.0.0-SNAPSHOT/;;;","03/May/22 07:29;moritzf;done - the 3.0 version is not affected, only <=2.0.26;;;","03/May/22 16:08;jira-bot;Commit 1900517 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900517 ]
+
+PDFBOX-5427: remove listener;;;","03/May/22 16:10;tilman;Thanks for your report and the analysis!;;;",,,,,,,,,,,,,
+java.lang.IndexOutOfBoundsException (2),PDFBOX-5424,13442148,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Minor,Fixed,tilman,tilman,tilman,27/Apr/22 17:33,29/Sep/22 17:57,07/May/23 20:06,27/Apr/22 17:35,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.27,3.0.0 PDFBox,,FontBox,,,0,,,"I forgot to fix 3.0 in PDFBOX-4866, I'm adding error handling in 3.0 and improve the message in 2.0",,,,,,,,,,,PDFBOX-4866,,,,,,,,,,,,,,,,,,,0.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Wed Apr 27 17:34:51 UTC 2022,,,,,,,,,,"0|z11vvc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"27/Apr/22 17:34;jira-bot;Commit 1900328 from Tilman Hausherr in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1900328 ]
+
+PDFBOX-5424: improve message;;;","27/Apr/22 17:34;jira-bot;Commit 1900329 from Tilman Hausherr in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1900329 ]
+
+PDFBOX-5424: avoid IndexOutOfBoundsException;;;",,,,,,,,,,,,,,,
+Parsing shows 1 empty page with 2.0.26 and 7 with 2.0.25,PDFBOX-5419,13439814,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,tilman,tilman,15/Apr/22 09:23,21/Apr/22 15:38,07/May/23 20:06,17/Apr/22 13:29,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,3.0.0 PDFBox,,Parsing,,,0,regression,,,,,,,,,,,,,,"15/Apr/22 09:23;tilman;PDFBOX-5419-4IMVKOWAZVGDFIUWAXFYBVHXKI5SHSK7.pdf;https://issues.apache.org/jira/secure/attachment/13042502/PDFBOX-5419-4IMVKOWAZVGDFIUWAXFYBVHXKI5SHSK7.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sun Apr 17 13:29:33 UTC 2022,,,,,,,,,,"0|z11hxc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"17/Apr/22 13:02;jira-bot;Commit 1899942 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899942 ]
+
+PDFBOX-5419: skip unexpected whitespaces;;;","17/Apr/22 13:02;jira-bot;Commit 1899943 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899943 ]
+
+PDFBOX-5419: skip unexpected whitespaces;;;","17/Apr/22 13:29;lehmi;This regression was introduced with PDFBOX-5399. This is another cornercase. The xref offsets don't reference the start of the object but one byte in front of it. The updated findObjectKey couldn't handle the found whitespace and triggered a brute force search which didn't end up in a correct pdf.
+
+;;;",,,,,,,,,,,,,,
+Infinite loop in ExtractText in 2.x branch on a specific pdf,PDFBOX-5415,13439268,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,tallison,tallison,12/Apr/22 18:08,28/Apr/22 03:05,07/May/23 20:06,,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Parsing,,,0,,,"[~DavidAvant] reported an infinite loop in Tika and provided an example file.  I can reproduce this with the latest PDFBox app 2.0.26-SNAPSHOT's ExtractText.
+
+File: https://issues.apache.org/jira/secure/attachment/13042292/map.pdf
+
+Adobe and a slightly out of date pdftotext also have problems with this file.",,,,,,,,,,,TIKA-3718,"12/Apr/22 18:11;tilman;PDFBOX-5415-TIKA-3718-p10.pdf;https://issues.apache.org/jira/secure/attachment/13042324/PDFBOX-5415-TIKA-3718-p10.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Apr 28 03:05:14 UTC 2022,,,,,,,,,,"0|z11ek0:",9223372036854775807,,,,,,,,,,,,,,,,,,,"13/Apr/22 00:09;tallison;Michael Demey's diagnosis: https://twitter.com/MyMilkedEek/status/1513990823511273472?s=20;;;","14/Apr/22 19:48;DavidAvant;To summarize the verdict from Michael Demey:   This PDF is wack.  :)
+The looping logic is not infinite, but the exponential nature of the loop is so bad that our star may go supernova before Tika is finished parsing it.
+
+As ridiculous as this PDF might be, I suspect we need to defend against it.   Otherwise this becomes a potential Denial of Service attack.
+
+Given Michael's description of the nature of the issue, does it seem plausible that this can be fixed within the parser itself?    Or do we need some external means of defense, like insulating the rest of the application by running Tika within its own thread?;;;","14/Apr/22 20:35;tallison;An answer on the Tika side. Yes, parsing is dangerous and you’ll need to isolate at the process level; thread level isolation is not enough. See what we offer in Tika for robustness: https://cwiki.apache.org/confluence/plugins/servlet/mobile?contentId=148647830#content/view/148647830;;;","27/Apr/22 19:06;DavidAvant;Do we foresee a fix on the PDFBox side any time in the near future?    If not, then perhaps we should hide the PDF which causes the problem.    Otherwise malicious people might find it and use it as a weapon.;;;","28/Apr/22 03:05;tilman;The file is valid and does extract, although very slowly. I don't see a risk, but this is mostly because it hasn't happened with previous problematic files.;;;",,,,,,,,,,,,
+Text segment missing,PDFBOX-5414,13438654,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Not A Bug,,tilman,tilman,08/Apr/22 17:59,09/Apr/22 09:41,07/May/23 20:06,09/Apr/22 09:41,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Parsing,,,0,regression,,The middle segment in page 1 with LIBAN is missing. It worked in 2.0.25.,,,,,,,,,,,,"09/Apr/22 09:35;tilman;EVH6PLTXSXHKSRTBDZSINZ22R3U5EBYY - first version.pdf;https://issues.apache.org/jira/secure/attachment/13042182/EVH6PLTXSXHKSRTBDZSINZ22R3U5EBYY+-+first+version.pdf","08/Apr/22 17:59;tilman;EVH6PLTXSXHKSRTBDZSINZ22R3U5EBYY.pdf;https://issues.apache.org/jira/secure/attachment/13042172/EVH6PLTXSXHKSRTBDZSINZ22R3U5EBYY.pdf",,,,,,,,,,,,,,,,,2.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Apr 09 09:41:28 UTC 2022,,,,,,,,,,"0|z11at4:",9223372036854775807,,,,,,,,,,,,,,,,,,,"09/Apr/22 09:25;lehmi;The result with 2.0.26 is different, but IMHO it is an improvement or at least the same result as other readers produce. I've checked evince (linux), firefox (linux+win10) and acrobat reader (win10). The first page is green with a wooden stripe on the left. The text box in the middle rendered by 2.0.25 is missing in all cases.
+
+The first page has different content streams:
+2.0.25: 61 0 R
+2.0.26: 554 0 R , it looks like an updated version of 61 0 R with a pre-appended draw command for the added image;;;","09/Apr/22 09:36;tilman;Yeah this is a weird file, it has several revisions. Here's the original file, which looks totally different. [^EVH6PLTXSXHKSRTBDZSINZ22R3U5EBYY - first version.pdf] ;;;","09/Apr/22 09:41;tilman;Agreed, 2.0.26 is the correct one.;;;",,,,,,,,,,,,,,
+Field text missing,PDFBOX-5413,13438651,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,tilman,tilman,08/Apr/22 17:45,21/Apr/22 15:38,07/May/23 20:06,14/Apr/22 06:05,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,3.0.0 PDFBox,,Parsing,,,0,regression,,"The bottom field on page 2 (""AREA OF CONSIDERATION"") is missing.
+This worked in 2.0.25. This is a weird case: incrementally written object 11 points to 0000102796. However there is a ""5"" just before the 11.",,,,,,,,,,,,"08/Apr/22 17:44;tilman;CZIB6B5RY5HQDSEXXWSGUHSAP75CAI7Q.pdf;https://issues.apache.org/jira/secure/attachment/13042171/CZIB6B5RY5HQDSEXXWSGUHSAP75CAI7Q.pdf","12/Apr/22 06:24;lehmi;WYPJNTD5KQNODSXWK4GABURXRTTD5P4H.pdf;https://issues.apache.org/jira/secure/attachment/13042277/WYPJNTD5KQNODSXWK4GABURXRTTD5P4H.pdf","12/Apr/22 06:24;lehmi;ZCY5MCL7KI6QXVMXUZ2AJKXICQIT4TL4.pdf;https://issues.apache.org/jira/secure/attachment/13042278/ZCY5MCL7KI6QXVMXUZ2AJKXICQIT4TL4.pdf",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Apr 14 06:05:53 UTC 2022,,,,,,,,,,"0|z11asg:",9223372036854775807,,,,,,,,,,,,,,,,,,,"09/Apr/22 08:35;lehmi;related to PDFBOX-5399;;;","10/Apr/22 12:46;jira-bot;Commit 1899700 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899700 ]
+
+PDFBOX-5413: skip objects if the object number doesn't match and the object is valid according to the xref table;;;","10/Apr/22 12:46;jira-bot;Commit 1899701 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899701 ]
+
+PDFBOX-5413: skip objects if the object number doesn't match and the object is valid according to the xref table;;;","10/Apr/22 13:00;lehmi;I've added another check which ignores unknown objects and don't trigger the brute force search. In this case the expected object at the given offset is {{11 0}}. The check added in PDFBOX-5399 detects the trailing {{5}} and assumes something has to be wrong and triggers the brute force search. In the end the object is read as {{511 0}} and is missing. 
+
+In this case there isn't any definition for an object with the number 511, so that fixing the obvious malformed pdf by replacing the number {{11 0}} with {{511 0}} leads to missing content. Let's assume that the offset, the found object itself is correct and the found digit {{5}} belongs to some garbage of the previous object. 
+
+
+;;;","12/Apr/22 06:23;lehmi;There is another regression and it looks like the root cause is the same.;;;","13/Apr/22 06:10;jira-bot;Commit 1899794 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899794 ]
+
+PDFBOX-5413: skip objects only if another one is expected at the very same or nearby offset;;;","13/Apr/22 06:11;jira-bot;Commit 1899795 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899795 ]
+
+PDFBOX-5413: skip objects only if another one is expected at the very same or nearby offset;;;","14/Apr/22 06:05;lehmi;Looks like all regressions are solved, set to resolved
+;;;",,,,,,,,,
+Possible loop detection is triggered in 2.0.26 but file works in 2.0.25,PDFBOX-5410,13438504,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,lehmi,lehmi,08/Apr/22 06:04,21/Apr/22 15:38,07/May/23 20:06,10/Apr/22 10:43,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,3.0.0 PDFBox,,Parsing,,,0,,,The attached file works fine using 2.0.25 but throws an exception in 2.0.26 due to a possible loop detection,,,,,,,,,,,,"08/Apr/22 06:04;lehmi;YIEMGIQYGXCQ5AZOE35ESXYCZHWR3V57.pdf;https://issues.apache.org/jira/secure/attachment/13042140/YIEMGIQYGXCQ5AZOE35ESXYCZHWR3V57.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sun Apr 10 10:36:12 UTC 2022,,,,,,,,,,"0|z119vs:",9223372036854775807,,,,,,,,,,,,,,,,,,,"08/Apr/22 06:08;lehmi;Looks like the changes from PDFBOX-5399 are the root cause. Now the parser stumbles upon the following malformed part of the attached pdf
+{code}
+endobj16 0 obj
+{code}
+There shall be some white space separating {{endobj}} and {{16 0 obj}} but obviously there isn't;;;","10/Apr/22 10:36;lehmi;With the fix from PDFBOX-5412 the loop detection isn't triggered any more -, but the pages are all nearly empty as most of the content is missing-
+
+Ths JBIG2-plugin was missing in my first test. After adding it, everything works fine.;;;",,,,,,,,,,,,,,,
+Page tree root must be a dictionary,PDFBOX-5400,13435245,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,tilman,tilman,23/Mar/22 03:54,21/Apr/22 15:38,07/May/23 20:06,02/Apr/22 12:50,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,,,Parsing,,,0,regression,,"worked in 2.0.25
+
+{noformat}
+Caused by: java.io.IOException: Page tree root must be a dictionary
+    org.apache.pdfbox.pdfparser.PDFParser.initialParse(PDFParser.java:198)
+    org.apache.pdfbox.pdfparser.PDFParser.parse(PDFParser.java:226)
+    org.apache.pdfbox.pdmodel.PDDocument.load(PDDocument.java:1107)
+{noformat}
+",,,,,,,,,,,,"23/Mar/22 03:53;tilman;4ECBGZDM5GUZG7UT75RV5GTUFWF5TSXK.pdf;https://issues.apache.org/jira/secure/attachment/13041446/4ECBGZDM5GUZG7UT75RV5GTUFWF5TSXK.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sat Apr 02 12:48:45 UTC 2022,,,,,,,,,,"0|z10qbk:",9223372036854775807,,,,,,,,,,,,,,,,,,,"23/Mar/22 13:38;mkl;(PDF with broken cross reference table. PDFBox used to be able to repair. Might be related to changes from PDFBOX-5283.);;;","23/Mar/22 17:45;lehmi;It is related to PDFBOX-5283 and the trunk is not affected and produces teh following warning 
+{code}
+Warning  [COSParser] found wrong object number. expected [2] found [1]
+Warning  [COSParser] found wrong object number. expected [4] found [3]
+{code}
+ 
+;;;","24/Mar/22 18:41;Schmidor;To me it seems the xref/trailer at the end references an older xref table and overrides some objects with newer ones.
+-Is it possilve that ""/prev"" references in the trailer are not handled?-
+
+As far as I understand it, I think the tables are mostly correct. It seems the first table starting with ""1 7"" instead of ""0 7"" causes an off-by-one for the objects 1, 2 and 4, as the others are overriden by the newer table. Before PDF-5283 the xref table was just rebuild.
+{code:java}
+xref					(at 672274)
+1 7
+0000000000 65535 f 
+0000000009 00000 n 			1
+0000671785 00000 n 			2
+0000671882 00000 n 			3 (old)
+0000672069 00000 n 			4
+0000672127 00000 n 			5 (old)
+0000672178 00000 n 			6 (old)
+trailer
+<<
+/Size 7
+/Root 5 0 R
+/Info 6 0 R
+>>
+startxref
+672274
+%%EOF
+
+xref 					(at 676375)
+0 1
+0000000000 65535 f
+3 1
+0000672492 00000 n			3
+5 3
+0000672655 00000 n			5
+0000672715 00000 n			6
+0000672852 00000 n			7
+trailer
+<</Size 8/Root 5 0 R/Info 6 0 R/ID[<D302B74AE38AE543991C9CD77C23B7EB><D302B74AE38AE543991C9CD77C23B7EB>]/Prev 672274>>
+startxref
+676375
+{code};;;","25/Mar/22 07:14;lehmi;[~Schmidor] As you already wrote, the ""1 7"" at the beginning oi the first version of the xref table leads to an off-by-one as ""0 6"" has to be used instead. So that the correct object numbers are as follows:
+{code}
+xref					(at 672274)
+1 7
+0000000000 65535 f                     1 free
+0000000009 00000 n 			2
+0000671785 00000 n 			3 (old)
+0000671882 00000 n 			4 
+0000672069 00000 n 			5 (old)
+0000672127 00000 n 			6 (old)
+0000672178 00000 n 			7 (old)
+trailer
+{code}
+The obects 3 and 5-7 are overwritten by the new version of the xref table, so that the objects 2 and 4 are still broken. Before PDFBOX-5238 PDFBox detects that glitch and trriggers are rebuild of the xref table using a brute force search.
+
+The recent changes repair the broken 2 0 reference by replacing it with the 1 0 object. The broken 4 0 reference points to the old 3 0 object and is simply removed as the new repair mechanism assumes the 3 0 object is due to a valid reference. But the broken 4 0 key points to the old 3 0 obj and the 3 0 key within the xref table is the new repaired one. Those are not related and the repair attempt is invalid. In the end only the objects 1,  3 and 5-7 are left in the xref table. Object 4 is missing and leads to the exception.
+
+To sum it up, in this case the repair attempt is incomplete due to wrong assumptions. The pdf is totally broken and we can't know if there are any parts we can rely on, so that only a brute force search may lead to a happy end
+;;;","29/Mar/22 14:17;Schmidor;Found the difference between trunk and 2.0.
+
+In both branches, if a referenced object is missing in the xref table, the object should be read from a brute force object list.
+
+In 2.0 this is not done, because here [https://github.com/apache/pdfbox/blob/2.0/pdfbox/src/main/java/org/apache/pdfbox/pdfparser/COSParser.java#L668] bfSearchCOSObjectKeyOffsets is null as the brute force search has not jet been done.
+
+ ;;;","31/Mar/22 06:09;lehmi;{quote}Found the difference between trunk and 2.0.{quote}
+There are a lot of changes in the trunk so that it isn't that easy to compare both to each other
+
+{quote}In both branches, if a referenced object is missing in the xref table, the object should be read from a brute force object list.{quote}
+Correct, in 2.0 it was triggered in {{checkXrefOffsets}}, but due to the changes from PDFBOX-5238 it isn't any more in every case. The following code still assumes that the bf search was triggered in {{checkXrefOffsets}} if necessary.
+
+However, it is a valid hint and may lead to a solution. My first attempt to trigger a later bf search didn't work, the exception is gone but the rendering is empty. I'll have to dig deeper
+;;;","31/Mar/22 08:16;Schmidor;In Trunk PDFBOX-5238 also prevents the initial search when the xref table is read. I think it is still done somewhere, when an explicitly requested object is missing. But that does not override the initial table and is only used for the missing objects.;;;","01/Apr/22 06:24;jira-bot;Commit 1899467 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899467 ]
+
+PDFBOX-5400: added trigger for brute force search as it isn't triggered in any cases anymore when validating the xref entries;;;","02/Apr/22 12:48;lehmi;The brute force search wasn't handled consistent. In most cases the parser simply checks the hash map containing the found mappings but didn't triggered the bf search itself. I've overhauled those parts so that the bf search is triggered always.
+[~Schmidor] Thanks for your valuable input
+;;;",,,,,,,,
+Object must be defined and must not be compressed object,PDFBOX-5399,13435242,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,tilman,tilman,23/Mar/22 03:35,21/Apr/22 15:38,07/May/23 20:06,27/Mar/22 18:04,2.0.26,,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,3.0.0 PDFBox,,Parsing,,,0,regression,,Worked in 2.0.25,,,,,,,,,,,,"23/Mar/22 03:35;tilman;LERFACO3LA3ANPZUYYODLAIFZHU3ZGCT.pdf;https://issues.apache.org/jira/secure/attachment/13041444/LERFACO3LA3ANPZUYYODLAIFZHU3ZGCT.pdf",,,,,,,,,,,,,,,,,,1.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sun Mar 27 20:09:42 UTC 2022,,,,,,,,,,"0|z10qaw:",9223372036854775807,,,,,,,,,,,,,,,,,,,"23/Mar/22 20:29;lehmi;Similar to PDFBOX-5400 the change from PDFBOX-5238 introduced this regression. Trunk looks fine and produces the following warnings
+{code}
+Warning  [COSParser] found wrong object number. expected [1655] found [55]
+Warning  [COSParser] found wrong object number. expected [1656] found [56]
+Warning  [COSParser] found wrong object number. expected [1657] found [57]
+Warning  [COSParser] found wrong object number. expected [1658] found [58]
+{code}
+;;;","27/Mar/22 17:57;jira-bot;Commit 1899252 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899252 ]
+
+PDFBOX-5399: search for an object number at offset - 1 to ensure to start at the beginning of a number;;;","27/Mar/22 17:58;jira-bot;Commit 1899253 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899253 ]
+
+PDFBOX-5399: search for an object number at offset - 1 to ensure to start at the beginning of a number;;;","27/Mar/22 18:03;lehmi;The real issue wasn't PDFBOX-5238 but the fact that the found object numbers are wrong. The offset of 1655 doesn't point to the object 55. Due to an off by two offset the object number of the correct object is parsed partially. I've improved the {{findObjectKey}} method so that such offsets to the offset are detected and the brute force search is triggered. In the end the problematic code of PDFBOX-5238 isn't relevant here anymore. ;-);;;","27/Mar/22 20:09;jira-bot;Commit 1899261 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899261 ]
+
+PDFBOX-5399: use skipWhiteSpaces instead of skipSpaces;;;","27/Mar/22 20:09;jira-bot;Commit 1899262 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899262 ]
+
+PDFBOX-5399: use skipWhiteSpaces instead of skipSpaces;;;",,,,,,,,,,,
+Parsing fails in 2.0.26 that worked in 2.0.25,PDFBOX-5398,13435239,Bug,Closed,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,Fixed,lehmi,tilman,tilman,23/Mar/22 03:19,21/Apr/22 15:38,07/May/23 20:06,07/Apr/22 06:18,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,2.0.26,3.0.0 PDFBox,,Parsing,,,0,regression,,"{noformat}
+März 23, 2022 4:14:13 AM org.apache.pdfbox.pdfparser.BaseParser parseCOSDictionaryNameValuePair
+WARNUNG: Empty COSName at offset 12313
+Exception in thread ""main"" java.io.IOException: Unknown dir object c='>' cInt=62 peek='>' peekInt=62 at offset 12326 (start offset: 12326)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseDirObject(BaseParser.java:928)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionaryValue(BaseParser.java:154)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionaryNameValuePair(BaseParser.java:303)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionary(BaseParser.java:228)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseDirObject(BaseParser.java:872)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionaryValue(BaseParser.java:154)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionaryNameValuePair(BaseParser.java:303)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseCOSDictionary(BaseParser.java:228)
+        at org.apache.pdfbox.pdfparser.BaseParser.parseDirObject(BaseParser.java:872)
+        at org.apache.pdfbox.pdfparser.COSParser.parseFileObject(COSParser.java:916)
+        at org.apache.pdfbox.pdfparser.COSParser.parseObjectDynamically(COSParser.java:883)
+        at org.apache.pdfbox.pdfparser.COSParser.parseObjectDynamically(COSParser.java:796)
+        at org.apache.pdfbox.pdfparser.COSParser.parseDictObjects(COSParser.java:756)
+        at org.apache.pdfbox.pdfparser.PDFParser.initialParse(PDFParser.java:187)
+        at org.apache.pdfbox.pdfparser.PDFParser.parse(PDFParser.java:226)
+{noformat}
+
+The cause is not PDFBOX-5283.",,,,,,,,,,,,"23/Mar/22 03:16;tilman;077867.pdf;https://issues.apache.org/jira/secure/attachment/13041443/077867.pdf","23/Mar/22 03:16;tilman;392443.pdf;https://issues.apache.org/jira/secure/attachment/13041442/392443.pdf","23/Mar/22 17:33;lehmi;crash-024bde7e01045bb3a6ab9d86ccccb13cf411bc35.pdf;https://issues.apache.org/jira/secure/attachment/13041491/crash-024bde7e01045bb3a6ab9d86ccccb13cf411bc35.pdf",,,,,,,,,,,,,,,,3.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Thu Apr 07 06:18:41 UTC 2022,,,,,,,,,,"0|z10qa8:",9223372036854775807,,,,,,,,,,,,,,,,,,,"23/Mar/22 03:21;tilman;That file has this empty COSName around offset 12313:
+{noformat}
+/ColorSpace << /CS0 16 0 R / /DeviceGray >> /ExtGState 230 0 R /ProcSet [ /PDF /Text ] >> 
+{noformat};;;","23/Mar/22 06:52;lehmi;Looks like it started with  [r1897171|http://svn.apache.org/viewvc?view=revision&revision=1897171]  from PDFBOX-5339;;;","23/Mar/22 13:48;mkl;Indeed, to _stop reading dictionaries containing empty COSName entries, most likely they are broken_ can mean to ignore perfectly correct dictionaries.;;;","23/Mar/22 17:36;lehmi;I've attached the pdf in question. It has a totally malformed dictionary and the patch works fine. But in hindsight the change seems to be to strict. ;;;","24/Mar/22 09:26;mkl;Yes, that file is _kaputt_. It suffices to make sure that PDFBox does not seriously hang up or kill the VM for it. An exception during parsing is completely appropriate. I would prefer a declared one, though, not a RuntimeException or Error.;;;","31/Mar/22 06:19;lehmi;For now I don't see any other solution than reverting my changes from PDFBOX-5339. It'll bring back a stack overflow exception triggered by a dictionary in [^crash-024bde7e01045bb3a6ab9d86ccccb13cf411bc35.pdf].;;;","07/Apr/22 06:16;jira-bot;Commit 1899640 from lehmi@apache.org in branch 'pdfbox/branches/2.0'
+[ https://svn.apache.org/r1899640 ]
+
+PDFBOX-5398, PDFBOX-5339: revert changes from 1897171 as they were to strict and led to unwanted parsing issues. This brings back an issue with a really bad pdf which ends up in a StackOverflow;;;","07/Apr/22 06:16;jira-bot;Commit 1899641 from lehmi@apache.org in branch 'pdfbox/trunk'
+[ https://svn.apache.org/r1899641 ]
+
+PDFBOX-5398, PDFBOX-5339: revert changes from 1897171 as they were to strict and led to unwanted parsing issues. This brings back an issue with a really bad pdf which ends up in a StackOverflow;;;","07/Apr/22 06:18;lehmi;[~tilman] thanks for the analysis;;;",,,,,,,,
+DeviceN/NChannel Seperation fails for rgb,PDFBOX-5370,13425148,Bug,Open,PDFBOX,PDFBox,software,lehmi,The Apache PDFBox® library is an open source Java tool for working with PDF documents. Apache PDFBox is published under the Apache License v2.0.,http://pdfbox.apache.org/,Major,,,msahyoun,msahyoun,27/Jan/22 12:06,30/Jan/22 18:01,07/May/23 20:06,,2.0.25,2.0.26,3.0.0 PDFBox,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Rendering,,,0,,,"The files NChannel-xx.pdf use different color modes for separation which is described in chapter  10.8.3 of the PDF spec. The matching .bmp files show the expected results. The -1.BMP and -1.PNG files show the results generated by PDFBox trunk (2.0 is the same result). 
+
+As can be seen the results for cmyk and Pantone are fine/close with the rgb rendering failing.
+
+The PDFs and expected results have been provided by Hans Bärfuss, PDF Tools AG. Thank you for contributing the samples.",,,,,,,,,,,,"27/Jan/22 12:02;msahyoun;NChannel-Pantone-1.BMP;https://issues.apache.org/jira/secure/attachment/13039409/NChannel-Pantone-1.BMP","27/Jan/22 12:02;msahyoun;NChannel-Pantone-1.PNG;https://issues.apache.org/jira/secure/attachment/13039408/NChannel-Pantone-1.PNG","27/Jan/22 12:02;msahyoun;NChannel-Pantone.bmp;https://issues.apache.org/jira/secure/attachment/13039413/NChannel-Pantone.bmp","27/Jan/22 12:01;msahyoun;NChannel-Pantone.pdf;https://issues.apache.org/jira/secure/attachment/13039417/NChannel-Pantone.pdf","27/Jan/22 12:02;msahyoun;NChannel-cmyk-1.BMP;https://issues.apache.org/jira/secure/attachment/13039411/NChannel-cmyk-1.BMP","27/Jan/22 12:02;msahyoun;NChannel-cmyk-1.PNG;https://issues.apache.org/jira/secure/attachment/13039410/NChannel-cmyk-1.PNG","27/Jan/22 12:02;msahyoun;NChannel-cmyk.bmp;https://issues.apache.org/jira/secure/attachment/13039414/NChannel-cmyk.bmp","27/Jan/22 12:01;msahyoun;NChannel-cmyk.pdf;https://issues.apache.org/jira/secure/attachment/13039415/NChannel-cmyk.pdf","27/Jan/22 12:02;msahyoun;NChannel-rgb-1.BMP;https://issues.apache.org/jira/secure/attachment/13039407/NChannel-rgb-1.BMP","27/Jan/22 12:02;msahyoun;NChannel-rgb-1.PNG;https://issues.apache.org/jira/secure/attachment/13039406/NChannel-rgb-1.PNG","27/Jan/22 12:02;msahyoun;NChannel-rgb.bmp;https://issues.apache.org/jira/secure/attachment/13039412/NChannel-rgb.bmp","27/Jan/22 12:01;msahyoun;NChannel-rgb.pdf;https://issues.apache.org/jira/secure/attachment/13039416/NChannel-rgb.pdf","30/Jan/22 12:46;tilman;NChannel-rgb2.pdf;https://issues.apache.org/jira/secure/attachment/13039527/NChannel-rgb2.pdf","30/Jan/22 12:36;lehmi;Patch_PDFBOX-5370.txt;https://issues.apache.org/jira/secure/attachment/13039525/Patch_PDFBOX-5370.txt","29/Jan/22 09:51;tilman;image-2022-01-29-10-51-18-421.png;https://issues.apache.org/jira/secure/attachment/13039508/image-2022-01-29-10-51-18-421.png","29/Jan/22 09:51;tilman;image-2022-01-29-10-51-44-286.png;https://issues.apache.org/jira/secure/attachment/13039509/image-2022-01-29-10-51-44-286.png","30/Jan/22 12:46;tilman;image-2022-01-30-13-46-16-080.png;https://issues.apache.org/jira/secure/attachment/13039526/image-2022-01-30-13-46-16-080.png",,17.0,,,,,,,,,,,,,,,,,,,,,,false,,,,,,,,,,,,,,,,,9223372036854775807,,,,Sun Jan 30 18:01:25 UTC 2022,,,,,,,,,,"0|z0z0dc:",9223372036854775807,,,,,,,,,,,,,,,,,,,"28/Jan/22 04:04;tilman;1.8 displays the RGB file properly?!;;;","28/Jan/22 04:45;tilman;I think 1.8 ""works"" because it uses tintTransform instead of NChannel.;;;","28/Jan/22 15:36;tilman;The problem is somehow in the calculations of {{PDDeviceN.toRGBWithAttributes(float[] value)}}
+{code}
+// multiply (blend mode)
+rgbValue[0] *= rgbComponent[0];
+rgbValue[1] *= rgbComponent[1];
+rgbValue[2] *= rgbComponent[2];
+{code}
+if an element of {{rgbComponent}} is 0, then the result will be 0, and this will never change in future loops.
+
+Btw {{toRGBWithAttributes(WritableRaster raster)}} is even worse, because the components of the left part are never initialized with 1.;;;","29/Jan/22 09:51;tilman;The PDF specification mentions that older viewers can ignore the NChannel: ""Conforming readers that do not support PDF 1.6 shall treat these colour spaces as normal DeviceN colour spaces and shall use the tint transformation function as appropriate."" So I tried to do this, and here's the result. Our rendering is different than Adobe. However the rendering of PDF.js, Chrome and ghostscript 9.27 are also similar to mine.
+!image-2022-01-29-10-51-44-286.png!;;;","29/Jan/22 18:51;lehmi;Looks like your implementation uses the opposite order of the adobe implementation, the lightest colour is on the right (yours) vs. left (adobe) side.
+
+I'm not sure if I understood the spec correct, but maybe inverting the colour values is the way to go:
+{quote}
+For DeviceN colour spaces that do not have a subtype of NChannel, 0.0 shall represent the minimum
+amount of colorant; 1.0 shall represent the maximum. Tints shall always be treated as subtractive colours,
+even if the device produces output for the designated component by an additive method. Thus, a tint value
+of 0.0 shall denote the lightest colour that can be achieved with the given colorant, and 1.0 the darkest.
+{quote}
+;;;","29/Jan/22 19:21;tilman;""my"" implementation used the tinttransform function. I assume that Dr. Bärfuss did a ""poor"" tint transform on purpose to expose applications that don't implement NChannels 😂
+
+I did play around a bit today, and remembered separation colors, 0 = white, 1 = ""that color"". So for red, 0 would be 1 1 1 (white) and 1 would be 1 0 0 (red). Medium red would be 1 0.5 0.5. The problem is how to combine two colors. Combining full red and blue, 1 0 0 and 0 0 1 would bring 0 0 0 (black) if multiplying. Adding would work here, but not for other combinations, e.g. 1 0.5 0.5 with 0.5 0.5 1.;;;","30/Jan/22 12:38;lehmi;[^Patch_PDFBOX-5370.txt] adds a special treatment for DeviceRGB colorspaces as those should be handled additive. It produces a similar result as adobe. WDYT?;;;","30/Jan/22 12:47;tilman;The third one is rather dark
+
+!image-2022-01-30-13-46-16-080.png!
+
+And I get only black when one of the two colors are 1, see attached file [^NChannel-rgb2.pdf];;;","30/Jan/22 14:34;lehmi;It was just a crazy idea, but it somehow targets two aspects of the issue. The one about the blending [~tilman] already mentioned earlier and the one about inverting the colour values in some or all cases;;;","30/Jan/22 14:44;msahyoun;To add a little context. The issues started when Hans Bärfuss approached me with him getting a different rendering than Adobe. There is some additional information I'd like to share:
+
+Translated from German:
+{quote}
+The (PDFBox) results. RGB as an alternate colorspace are very rare for NChannel in the field. The explanation for the green color: I created the tint transform for the DeviceN color in a different color than the color of the different separations so one can see the differences in rendering engines as most rendering are only supporting deviceN but not NChannel.
+{quote}
+
+Please also see the part from ISO-32000-2 mentioned above (10.8.3)
+{quote}
+The results of the simulation should match those produced by the following steps:
+a) Process the PDF as if separations were to be created for a simulated device that supports subtractive
+process colourants and possibly spot colours. The PDF processor determines what process colours and
+possible spot colours the simulated device is to have. A default DestOutputProfile, if available for a
+subtractive device, or ColorantTable values, if available for a subtractive device, should be consulted to
+determine the process colours to use (see 14.11.5, ""Output intents"").
+b) Convert each separation into ""flat XYZ"" (no gamma) and using a background matte of all white.
+c) Blend the resulting separations into a single result using a multiply blend (see ""Table 133 — Variables
+used in the basic compositing formula"").
+d) Convert the result to the actual device colour space and output it.
+{quote}
+Maybe that clarifies the expected processing to get the sample results;;;","30/Jan/22 14:50;msahyoun;[~tilman] [~lehmi]  are you refering to the processing sections in ISO 32000-1 or ISO 32000-2? They somewhat differ a little with 32000-2 being more specific.;;;","30/Jan/22 14:52;tilman;I was looking at 1.7 specification.;;;","30/Jan/22 18:01;lehmi;I was looking at the 1.7 spec as well;;;",,,,
