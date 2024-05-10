@@ -1,0 +1,63 @@
+1. 1. T
+   2. T
+   3. A
+   4. T
+   5. A
+   6. T
+   7. A
+   8. T
+2. C
+3. A
+4. D
+5. B
+6. 1. A
+   2. C
+   3. B
+   4. D
+7. 8
+8. 360 - DOUBT - k i think right 
+9. 8
+10.1. C
+   2. B - K Doubt
+   3. A
+11. A
+12. 5 (cache() is an Apache Spark transformation that can be used on a DataFrame, Dataset, or RDD when you want to perform more than one action.) Count is there
+13. D
+14. A
+15. A
+16. A
+17. B, C, D (Changed from A, C, D)
+18. A, C, D - DOUBT (k i think correct)
+19. C
+20. C
+21. A(FAULT TOLERANCE), C(ABILITY TO UNSTRUCTURED), D(LOW COST),E(SCALABILITY)
+22. A(LINEAGE), B(COARSE), D(IMMUTABLE)
+23. C
+24. A
+25. A, B, C
+26. C (k doubt...(x,1))
+27. D
+28. D
+29. C
+30. C
+31. D (Changed from C)
+32. B
+33. B
+34. C
+35. A
+36. A, C, D
+37. A
+38. A, C, D
+39. A, B, D
+40. B
+41. B
+42. A, B, C, D
+43. A, B, D
+44. k C
+45. B
+46. A
+------------
+47. ABD (pipeline)
+48. k B (rank)
+49. k C
+50. k D
